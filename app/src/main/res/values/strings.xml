@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">E-Pustakalaya</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="action_search">Search</string>
+    <string name="search_hint">Find Book</string>
+
+    <string name="action_sort">Sort</string>
+    <string name="sort_by_author">Sort By Author</string>
+    <string name="sort_by_title">Sort By Title</string>
+    <string name="sort_by_date">Sort By Date</string>
+    <string name="sort_ascending">Ascending</string>
+    <string name="sort_descending">Descending</string>
+
+    <string name="action_about_us">About us</string>
+
+    <string-array name="titles">
+        <item>Literature</item>
+        <item>Art</item>
+        <item>Course Materials</item>
+        <item>Teaching Materials</item>
+        <item>Reference Materials</item>
+        <item>Newspaper &amp; Magazines</item>
+        <item>Other Materials</item>
+    </string-array>
+
+    <string name="drawer_open">opening drawer</string>
+    <string name="drawer_close">closing drawer</string>
+
+    <string name="no_internet_connection_available">No Internet connection available</string>
+
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_book_detail">Details</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="title_activity_about_us">About us</string>
+
+    <string name="title_about_ep">App Version: 1.0.7\n
+        <b>E-Pustakalaya</b> is an education-focused digital library containing full-text documents,
+        books, images, videos, audio files, and interactive educational software that can be accessed through an intranet
+        or on the Internet. E-Pustakalaya is developed and maintained by OLE Nepal</string>
+
+    <string name="content_about_us"> <b>OLE Nepal (Open Learning Exchange Nepal)</b>
+        is a social benefit organization dedicated to enhancing teaching-learning in schools through the integration
+        of technology and to provide uniform access to quality educational materials across different geographic areas
+        and socio-economic strata. \n OLE Nepal develops and distributes free educational content , trains teachers
+        to integrate technology in classrooms, implements technology interventions in rural schools, and helps build
+        local capacity in technology and education.\n\n
+        <b>For more information:</b>\n
+        Open Learning Exchange Nepal\n
+        <i>Telephone:\n</i>
+        +977-1-554-4441, 552-0075 \n
+        <i>E-mail:\n</i>
+        <a href="mailto:pustakalaya@olenepal.org">pustakalaya@olenepal.org</a>\n
+        <i>Web sites:</i>\n
+        http://pustakalaya.org \n
+        http://www.olenepal.org \n
+    </string>
+    <string name="setting_custom_desc">provide ip address of the machine where e-pustakalaya is hosted</string>
+    <string name="setting_custom_heading">custom</string>
+    <string name="setting_schoolserver_desc">use offline epustakalaya server(schoolserver) deployed at schools</string>
+    <string name="setting_schoolserver_heading">http://schoolserver/fez/</string>
+    <string name="setting_pustakalaya_desc">access books on http://pustakalaya.org using internet</string>
+    <string name="setting_pustakalaya_heading">http://pustakalaya.org</string>
+    <string name="title_activity_audio_books">AudioBooksActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

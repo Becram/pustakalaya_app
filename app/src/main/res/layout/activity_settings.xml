@@ -1,0 +1,221 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ole.epustakalaya.SettingsActivity"
+    android:orientation="vertical"
+    android:background="@color/setting_bg_color">
+
+    <!--<TextView
+        android:text="Settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="36sp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000000"
+        />-->
+    <TextView
+        android:text="Select Server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/settting_title_text_size"
+        android:textColor="#000"
+        android:background="@color/setting_title_bg_color"
+        android:padding="10dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/setting_divider_color">
+
+    </View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:layout_marginLeft="10dp"
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/remote_icon"
+                    android:scaleType="fitCenter"/>
+                <LinearLayout
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/setting_title_text_color"
+                        android:text="@string/setting_pustakalaya_heading"
+                        android:textSize="@dimen/settting_title_text_size"
+                        android:gravity="center_vertical"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/setting_desc_text_color"
+                        android:text="@string/setting_pustakalaya_desc"
+                        android:textSize="@dimen/setting_desc_text_size"
+                        android:gravity="center_vertical"
+                        />
+                </LinearLayout>
+
+                <RadioButton
+                    android:id="@+id/rbPustakalayaServer"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/setting_divider_color">
+
+            </View>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:layout_marginLeft="10dp"
+
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/local_icon"
+                    android:scaleType="fitCenter"/>
+
+                <LinearLayout
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/setting_title_text_color"
+                        android:text="@string/setting_schoolserver_heading"
+                        android:textSize="@dimen/settting_title_text_size"
+                        android:gravity="center_vertical"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/setting_desc_text_color"
+                        android:textSize="@dimen/setting_desc_text_size"
+                        android:text="@string/setting_schoolserver_desc"
+                        android:gravity="center_vertical"
+                        />
+                </LinearLayout>
+
+                <RadioButton
+                    android:id="@+id/rbSchoolServer"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/setting_divider_color">
+
+            </View>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:layout_marginLeft="10dp"
+                >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/custom_icon"
+                    android:scaleType="fitCenter"/>
+                <LinearLayout
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/setting_title_text_color"
+                        android:text="@string/setting_custom_heading"
+                        android:textSize="@dimen/settting_title_text_size"
+                        android:gravity="center_vertical"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/setting_desc_text_color"
+                        android:textSize="@dimen/setting_desc_text_size"
+                        android:text="@string/setting_custom_desc"
+
+                        android:gravity="center_vertical"
+                        />
+                </LinearLayout>
+                <RadioButton
+                    android:id="@+id/rbCustomServer"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"></LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="IP : "
+                android:textColor="@color/setting_title_text_color"
+                android:textSize="20sp"
+                android:gravity="center_vertical"
+                />
+            <EditText
+                android:id="@+id/etIPCustomServer"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/setting_divider_color">
+
+        </View>
+        </LinearLayout>
+
+
+</LinearLayout>

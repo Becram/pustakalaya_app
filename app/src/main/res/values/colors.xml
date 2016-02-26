@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="setting_divider_color">#ffd1d1d1</color>
+    <color name="setting_bg_color" >#F0F0F0</color>
+    <color name="setting_title_bg_color">#ffc1cbba</color>
+    <color name="setting_title_text_color">#000</color>
+    <color name="setting_desc_text_color">#ff7b7b7b</color>
+
+
+</resources>

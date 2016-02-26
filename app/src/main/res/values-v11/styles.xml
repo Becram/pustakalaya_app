@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MyPopupMenu">#0F213F
+        #000000
+        @style/subtitletextstyle
+    </style>
+
+
+    <style name="MyActionBar">#ffffff
+        @style/MyTheme.ActionBar.TitleTextStyle
+    </style>
+
+</resources>

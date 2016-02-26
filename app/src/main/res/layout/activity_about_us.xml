@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="0dp"
+    tools:context="com.ole.epustakalaya.AboutUsActivity"
+    android:background="#ffffff"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/aboutus"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/about_us_ep"
+                android:text="@string/title_about_ep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textColor="#656565"
+                android:layout_gravity="center_vertical|right"
+                android:textSize="20dp"
+                android:autoLink="all"/>
+
+            <TextView
+                android:id="@+id/about_us_para"
+                android:text="@string/content_about_us"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:textColor="#656565"
+                android:layout_gravity="center_vertical|right"
+                android:textSize="20dp"
+                android:autoLink="all"/>
+
+            </LinearLayout>
+        </ScrollView>
+    
+
+</LinearLayout>

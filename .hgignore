@@ -1,0 +1,13 @@
+\.idea/
+\.gradle/
+gradle
+local.properties
+/*/out
+/*/*/build
+build
+/*/*/production
+
+# use glob syntax.
+syntax: glob
+*.iml
+

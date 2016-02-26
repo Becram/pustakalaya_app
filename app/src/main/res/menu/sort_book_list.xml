@@ -1,0 +1,55 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MyActivity" >
+    <item android:id="@+id/action_sort"
+        android:title="@string/action_sort"
+        android:icon="@drawable/action_sort"
+        android:orderInCategory="100"
+        app:showAsAction="always|withText">
+        <menu>
+        <group android:checkableBehavior="single">
+            <item android:id="@+id/author_sort"
+                android:title="@string/sort_by_author"
+                >
+                <menu>
+                    <group android:checkableBehavior="single">
+                        <item android:id="@+id/author_ascending"
+                            android:title="@string/sort_ascending"
+                            />
+                        <item android:id="@+id/author_descending"
+                            android:title="@string/sort_descending"/>
+                    </group>
+                </menu>
+            </item>
+            <item android:id="@+id/title_sort"
+                android:title="@string/sort_by_title">
+                <menu>
+                    <group android:checkableBehavior="single">
+                        <item android:id="@+id/title_ascending"
+                            android:title="@string/sort_ascending"
+                           />
+                        <item android:id="@+id/title_descending"
+                            android:title="@string/sort_descending"/>
+                    </group>
+                </menu>
+            </item>
+            <item android:id="@+id/date_sort"
+                android:title="@string/sort_by_date">
+                <menu>
+                    <group android:checkableBehavior="single">
+                        <item android:id="@+id/date_ascending"
+                            android:title="@string/sort_ascending"
+                            />
+                        <item android:id="@+id/date_descending"
+                            android:title="@string/sort_descending"/>
+                    </group>
+                </menu>
+            </item>
+
+        </group>
+
+        </menu>
+
+    </item>
+</menu>

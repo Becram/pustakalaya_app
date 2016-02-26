@@ -1,0 +1,275 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ole.epustakalaya.BookDetailsActivity"
+    android:orientation="vertical">
+
+    <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:orientation="vertical">
+               <TextView
+                   android:id="@+id/tvTitle"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:textSize="28dp"
+                   android:textColor="#0D8282"
+                   android:text="Title"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="top"
+                android:gravity="top">
+                <ImageView
+                    android:id="@+id/ivCoverImage"
+                    android:layout_width="120dp"
+                    android:layout_height="170dp"
+                    android:layout_gravity="top"
+                    android:src="@drawable/book_not_available"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    />
+                <LinearLayout
+                    android:paddingLeft="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvAuthor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textColor="#5F670F"
+                        android:text=""/>
+
+                    <LinearLayout
+                        android:id="@+id/publisherId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Publisher :"
+                            android:textSize="14dp"
+                            android:textColor="#8e8e8e"
+                            />
+                        <TextView
+                            android:id="@+id/tvPublisher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#8e8e8e"
+                            android:paddingLeft="20dp"
+                            android:text=""/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_weight="3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="language :"
+                            android:textSize="14dp"
+                            android:textColor="#f7000000"/>
+                        <TextView
+                            android:id="@+id/tv_lang"
+                            android:layout_weight="4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#8e8e8e"
+                            android:text="-"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llPageCountId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+                        <TextView
+                            android:layout_weight="3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="pages :"
+                            android:textSize="14dp"
+                            android:textColor="#f7000000"/>
+                        <TextView
+                            android:id="@+id/tv_PageCount"
+                            android:layout_weight="4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#8e8e8e"
+                            android:text="-"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/llFilesizeId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+                        <TextView
+                            android:layout_weight="3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="file size:"
+                            android:textSize="14dp"
+                            android:textColor="#f7000000"/>
+                        <TextView
+                            android:id="@+id/tv_filesize"
+                            android:layout_weight="4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#8e8e8e"
+                            android:text="-"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/llViewsCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_weight="3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="views :"
+                            android:textSize="14dp"
+                            android:textColor="#f7000000"/>
+                        <TextView
+                            android:id="@+id/tvViewsCount"
+                            android:layout_weight="4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#8e8e8e"
+                            android:text="-"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llDownloadCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_weight="3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="downloads :"
+                            android:textSize="14dp"
+                            android:textColor="#f7000000"/>
+                        <TextView
+                            android:id="@+id/tvDownloadCount"
+                            android:layout_weight="4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#8e8e8e"
+                            android:text="-"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Place of Publication :"
+                            android:textSize="14dp"
+                            android:textColor="#8e8e8e"/>
+                        <TextView
+                            android:id="@+id/tv_placeOfPublication"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#8e8e8e"
+                            android:paddingLeft="20dp"
+                            android:text="online"/>
+                        </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="0dp"
+                        ></View>
+
+                    <!--<Button-->
+                        <!--android:id="@+id/btnDownload"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textSize="16dp"-->
+                        <!--android:text="Download"/>-->
+                    <LinearLayout
+                        android:id="@+id/bookButtons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <Button
+                            android:id="@+id/btnDownloadOpen"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Download"
+                            />
+                        <Button
+                            android:id="@+id/btnDelete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Delete"
+                            />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Summary"
+                    android:textSize="28dp"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:background="#F7F7F7"
+                    android:textColor="#5E5E5E"/>
+                <TextView
+                    android:id="@+id/tvSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#8e8e8e"
+                    android:text=""
+                    android:autoLink="all"
+                    android:layout_gravity="center_vertical|right"
+                    android:textSize="18dp"/>
+
+                </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
