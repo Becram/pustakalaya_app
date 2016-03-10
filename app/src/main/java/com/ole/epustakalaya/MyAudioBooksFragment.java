@@ -1,5 +1,6 @@
 package com.ole.epustakalaya;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.ole.epustakalaya.interfacesAndAdaptors.AudioBookAdapter;
+import com.ole.epustakalaya.interfacesAndAdaptors.ItemClickSupport;
 import com.ole.epustakalaya.models.AllAudioBooks;
 import com.ole.epustakalaya.models.RecycleItem;
 import com.ole.epustakalaya.retrofit_api.PustakalayaApiInterface;
@@ -84,7 +86,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
     }
 
     @Override
-    public void onResponse(Response<AllAudioBooks> response, Retrofit retrofit) {
+    public void onResponse(final Response<AllAudioBooks> response, Retrofit retrofit) {
 
         progress.setVisibility(View.GONE);
 
@@ -103,6 +105,26 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
 //        RecyclerAdaper adapter = (RecyclerAdaper) mRecyclerView.getAdapter();
         Log.d("snkbdj", ToStringBuilder.reflectionToString(response));
          mAdapter.notifyDataSetChanged();
+
+        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+
+
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+
+
+                Log.d("Cool", response.body().getContent().get(position).getTitle());
+
+                Intent i = new Intent(getActivity(), AudioDetails.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("bookID", response.body().getContent().get(position).getId());
+                Log.d("book id", response.body().getContent().get(position).getId());
+                startActivity(i);
+
+
+            }
+
+        });
 
     }
 
