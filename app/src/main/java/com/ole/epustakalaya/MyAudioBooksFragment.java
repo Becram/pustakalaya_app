@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +42,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
     private PustakalayaApiInterface APIInterface;
     private AudioBookAllAdapter mAdapter;
     private List<RecycleItem> result;
+    private GridLayoutManager lLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +50,29 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
 
 
     }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        setTitle(null);
+
+        Toolbar topToolBar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(topToolBar);
+        topToolBar.setLogo(R.drawable.logo);
+        topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));
+
+        List<ItemObject> rowListItem = getAllItemList();
+        lLayout = new GridLayoutManager(MainActivity.this, 4);
+
+        RecyclerView rView = (RecyclerView)findViewById(R.id.recycler_view);
+        rView.setHasFixedSize(true);
+        rView.setLayoutManager(lLayout);
+
+        RecyclerViewAdapter rcAdapter = new RecyclerViewAdapter(MainActivity.this, rowListItem);
+        rView.setAdapter(rcAdapter);
+    }
+
+
 
     @Nullable
     @Override
@@ -55,7 +81,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
 
 
         mRecyclerView = (RecyclerView) rootview.findViewById(R.id.activity_main_recycler_view);
-        progress= (ProgressBar)rootview.findViewById(R.id.progress);
+//        progress= (ProgressBar)rootview.findViewById(R.id.progress);
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -63,6 +89,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
         mRecyclerView.setLayoutManager(mLayoutManager);
         Retrofit_Reloader("date");
         progress.setVisibility(View.VISIBLE);
+        lLayout = new GridLayoutManager(getContext(), 3);
 
 
 

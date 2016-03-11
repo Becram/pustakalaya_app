@@ -19,9 +19,9 @@ public class MyAudioAllViewHolder extends RecyclerView.ViewHolder{
 
     public MyAudioAllViewHolder(View itemView) {
         super(itemView);
-        mPicture = (ImageView) itemView.findViewById(R.id.icon_recycle);
-        mName = (TextView) itemView.findViewById(R.id.firstLine);
-        mAuthor = (TextView) itemView.findViewById(R.id.secondLine);
+        mPicture = (ImageView) itemView.findViewById(R.id.audio_cover);
+//        mName = (TextView) itemView.findViewById(R.id.firstLine);
+        mAuthor = (TextView) itemView.findViewById(R.id.audio_author);
 
 
     }

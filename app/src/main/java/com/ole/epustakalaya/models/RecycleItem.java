@@ -13,5 +13,11 @@ public class RecycleItem {
     public String views;
     public String language;
 
+    public String getAuthor() {
+        return Author;
+    }
+    public String getImage() {
+        return image;
+    }
 
 }
