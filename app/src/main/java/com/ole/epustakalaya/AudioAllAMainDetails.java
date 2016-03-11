@@ -1,6 +1,5 @@
 package com.ole.epustakalaya;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +18,7 @@ import java.util.List;
 /**
  * Created by bikram on 3/10/16.
  */
-public class AudioDetails extends ActionBarActivity {
+public class AudioAllAMainDetails extends ActionBarActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -76,7 +74,7 @@ public class AudioDetails extends ActionBarActivity {
     private void setupViewPager(ViewPager viewPager) {
         TabViewPagerAdapter adapter = new TabViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new AudioDetailsFragment(), "Details");
-        adapter.addFragment(new AudioPlayFragment(), "Play");
+        adapter.addFragment(new AudioTracksPlayFragment(), "Play");
 
         viewPager.setAdapter(adapter);
     }

@@ -88,10 +88,10 @@ public class AudioDetailsFragment extends Fragment implements Callback<ModelAudi
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIInterface=retrofit.create(PustakalayaApiInterface.class);
-        face=Typeface.createFromAsset(getActivity().getAssets(), "fonts/Kelson Sans Light.otf");
+//        face=Typeface.createFromAsset(getActivity().getAssets(), "fonts/Kelson Sans Light.otf");
 
-        Log.d("Bookid from details", AudioDetails.bookid);
-        Call<ModelAudioBookDetails> call = APIInterface.getAudioBooksDetails(AudioDetails.bookid);
+        Log.d("Bookid from details", AudioAllAMainDetails.bookid);
+        Call<ModelAudioBookDetails> call = APIInterface.getAudioBooksDetails(AudioAllAMainDetails.bookid);
 
         call.enqueue(this);
     }
@@ -115,7 +115,7 @@ public class AudioDetailsFragment extends Fragment implements Callback<ModelAudi
                 Picasso.with(getContext()).load(BASE_URL + response.body().getContent().getImage())
                         .into(cover);
                 text_title.setText("Title:" + response.body().getContent().getTitle());
-                text_description.setTypeface(face);
+            //    text_description.setTypeface(face);
 
 
                 text_author.setText("Author:" + response.body().getContent().getAuthor());

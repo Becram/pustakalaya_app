@@ -1,4 +1,4 @@
-package com.ole.epustakalaya;
+package com.ole.epustakalaya.interfacesAndAdaptors;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioListViewHolder;
-import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioViewHolder;
+import com.ole.epustakalaya.MainActivity;
+import com.ole.epustakalaya.R;
+import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioAllViewHolder;
+import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioTracksViewHolder;
 import com.ole.epustakalaya.interfacesAndAdaptors.OnLoadMoreListener;
-import com.ole.epustakalaya.interfacesAndAdaptors.ProgressAudio;
+
 import com.ole.epustakalaya.models.Track;
 
 import java.util.List;
@@ -22,7 +24,7 @@ import java.util.List;
 /**
  * Created by bikram on 3/10/16.
  */
-public class AudioListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     protected String BASE_URL="http://www.pustakalaya.org";
     public static String AudioDirectory = Environment.getExternalStorageDirectory()+"/Epustakalaya/AudioBooks/";
@@ -46,7 +48,7 @@ public class AudioListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewH
     private long myDownloadReference;
 
 
-    public AudioListAdapter( List<Track> BookList,RecyclerView recyclerV, Context m) {
+    public AudioTracksAdapter(List<Track> BookList, RecyclerView recyclerV, Context m) {
         this.mTrackList = BookList;
         this.myContext=m;
         if(recyclerV.getLayoutManager() instanceof LinearLayoutManager){
@@ -86,7 +88,7 @@ public class AudioListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewH
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.audio_list_row, parent, false);
 
-            vholder = new MyAudioViewHolder(v);
+            vholder = new MyAudioTracksViewHolder(v);
         } else {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.progressbar_item, parent, false);
@@ -105,15 +107,17 @@ public class AudioListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
         final Track mTrack=mTrackList.get(position);
-        if (HOLDER instanceof MyAudioListViewHolder) {
-            ((MyAudioListViewHolder) HOLDER).getTextViewAudioTitle().setText(mTrack.track_title);
+        if (HOLDER instanceof MyAudioTracksViewHolder) {
+            ((MyAudioTracksViewHolder) HOLDER).getTextViewAudioTitle().setText(mTrack.track_title);
+            Log.d("title_test", mTrack.track_title);
 
-            ((MyAudioListViewHolder) HOLDER).getFileSize().setText(humanReadableByteCount(mTrack.track_size,true));
-            ((MyAudioListViewHolder) HOLDER).getDuration().setText(getConvertedTime(mTrack.track_duration));
-            ((MyAudioListViewHolder) HOLDER).getTextViewAudioTitle().setTypeface(face);
-            ((MyAudioListViewHolder) HOLDER).getDownloader().setOnClickListener(new View.OnClickListener() {
+                    ((MyAudioTracksViewHolder) HOLDER).getFileSize().setText(humanReadableByteCount(mTrack.track_size, true));
+            ((MyAudioTracksViewHolder) HOLDER).getDuration().setText(getConvertedTime(mTrack.track_duration));
+        //    ((MyAudioTracksViewHolder) HOLDER).getTextViewAudioTitle().setTypeface(face);
+            ((MyAudioTracksViewHolder) HOLDER).getDownloader().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     Toast.makeText(v.getContext(), "downloader at " + String.valueOf(position), Toast.LENGTH_LONG).show();
 
 
@@ -144,7 +148,8 @@ public class AudioListAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewH
 
         } else {
             Log.d("loading", "binder");
-            ((ProgressAudio) HOLDER).progressAudio.setIndeterminate(true);
+           ((ProgressAudio) HOLDER).progressAudio.setIndeterminate(true);
+//            ((ProgressAudio) HOLDER).progressAudio.setIndeterminate(true);
         }
 
 

@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.ole.epustakalaya.interfacesAndAdaptors.AudioTracksAdapter;
 import com.ole.epustakalaya.interfacesAndAdaptors.ItemClickSupport;
 import com.ole.epustakalaya.models.ModelAudioBookDetails;
 import com.ole.epustakalaya.models.Track;
@@ -39,10 +40,10 @@ import retrofit.Retrofit;
 /**
  * Created by bikram on 3/10/16.
  */
-public class AudioPlayFragment extends Fragment implements Callback<ModelAudioBookDetails>, SeekBar.OnSeekBarChangeListener{
+public class AudioTracksPlayFragment extends Fragment implements Callback<ModelAudioBookDetails>, SeekBar.OnSeekBarChangeListener{
 
     private List<Track> mListItems;
-    private AudioListAdapter mAdapter;
+    private AudioTracksAdapter mAdapter;
     private PustakalayaApiInterface APIInterface;
     public static String AudioDirectory = Environment.getExternalStorageDirectory()+"/Epustakalaya/AudioBooks/";
     public ListView listView;
@@ -170,7 +171,7 @@ public class AudioPlayFragment extends Fragment implements Callback<ModelAudioBo
         super.onActivityCreated(savedInstanceState);
 //        mListItems = new ArrayList<Track>();
 //
-//        mAdapter = new AudioListAdapter(getContext(), mListItems);
+//        mAdapter = new AudioTracksAdapter(getContext(), mListItems);
 //        listView.setAdapter(mAdapter);
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -178,7 +179,7 @@ public class AudioPlayFragment extends Fragment implements Callback<ModelAudioBo
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIInterface = retrofit.create(PustakalayaApiInterface.class);
-        Call<ModelAudioBookDetails> call = APIInterface.getAudioBooksDetails(AudioDetails.bookid);
+        Call<ModelAudioBookDetails> call = APIInterface.getAudioBooksDetails(AudioAllAMainDetails.bookid);
 
         call.enqueue(this);
 
@@ -270,16 +271,22 @@ public class AudioPlayFragment extends Fragment implements Callback<ModelAudioBo
     @Override
     public void onResponse(final Response<ModelAudioBookDetails> response, Retrofit retrofit) {
         mListItems=createList(response);
+        Log.d("list",mListItems.get(0).getTitle());
 
-        mAdapter = new AudioListAdapter(createList(response),audioRecyclerView ,getActivity());
+        mAdapter = new AudioTracksAdapter(createList(response),audioRecyclerView ,getActivity());
+
         audioRecyclerView.clearFocus();
+
         audioRecyclerView.setAdapter(mAdapter);
+
         ItemClickSupport.addTo(audioRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
                 Track track = mListItems.get(position);
+
                 mSelectedTrackTitle.setText(response.body().getContent().getTitle());
+
                 mSelectedTrackChapter.setText(track.getTitle());
 
                 Picasso.with(getContext()).load(BASE_URL + response.body().getContent().getImage()).into(mSelectedTrackImage);

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ole.epustakalaya.MainActivity;
 import com.ole.epustakalaya.R;
 import com.ole.epustakalaya.models.RecycleItem;
 import com.squareup.picasso.Picasso;
@@ -18,7 +17,7 @@ import java.util.List;
 /**
  * Created by bikram on 2/12/16.
  */
-public class AudioBookAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+public class AudioBookAllAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
 
     private final int VIEW_ITEM = 1;
     private final int VIEW_PROG = 0;
@@ -42,7 +41,7 @@ public class AudioBookAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewH
     private Typeface face;
 
 
-    public AudioBookAdapter(List<RecycleItem> BookList , RecyclerView recyclerView,Context con) {
+    public AudioBookAllAdapter(List<RecycleItem> BookList, RecyclerView recyclerView, Context con) {
         this.mBookList = BookList;
         this.mContext=con;
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
@@ -83,7 +82,7 @@ public class AudioBookAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewH
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.recycle_row, parent, false);
 
-            vh = new MyAudioViewHolder(v);
+            vh = new MyAudioAllViewHolder(v);
         } else {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.progressbar_item, parent, false);
@@ -99,13 +98,13 @@ public class AudioBookAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewH
 //        face= Typeface.createFromAsset(mContext.getAssets(), "fonts/Kelson Sans Light.otf");
 
         final RecycleItem Book=mBookList.get(position);
-        if (holder instanceof MyAudioViewHolder) {
-            ((MyAudioViewHolder) holder).getTextViewName().setText(Book.title);
-//            ((MyAudioViewHolder) holder).getTextViewName().setTypeface(face);
-            ((MyAudioViewHolder) holder).getAuthorViewName().setText(Book.Author);
-//            ((MyAudioViewHolder) holder).getAuthorViewName().setTypeface(face);
+        if (holder instanceof MyAudioAllViewHolder) {
+            ((MyAudioAllViewHolder) holder).getTextViewName().setText(Book.title);
+//            ((MyAudioAllViewHolder) holder).getTextViewName().setTypeface(face);
+            ((MyAudioAllViewHolder) holder).getAuthorViewName().setText(Book.Author);
+//            ((MyAudioAllViewHolder) holder).getAuthorViewName().setTypeface(face);
             Picasso.with(mContext).load(BASE_URL + Book.image)
-                    .into(((MyAudioViewHolder) holder).getPicture());
+                    .into(((MyAudioAllViewHolder) holder).getPicture());
 
         } else {
             ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
@@ -145,7 +144,7 @@ public class AudioBookAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewH
 //            public void onClick(View v) {
 ////                Toast.makeText(this,Book.title,Toast.LENGTH_LONG).show();
 //                Log.d("clicked",Book.id);
-//                Intent i=new Intent(mContext, AudioDetails.class);
+//                Intent i=new Intent(mContext, AudioAllAMainDetails.class);
 //                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                i.putExtra("bookID",Book.id);
 //                mContext.startActivity(i);

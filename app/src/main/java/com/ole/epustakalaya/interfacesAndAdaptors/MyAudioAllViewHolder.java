@@ -10,14 +10,14 @@ import com.ole.epustakalaya.R;
 /**
  * Created by bikram on 2/12/16.
  */
-public class MyAudioViewHolder extends RecyclerView.ViewHolder{
+public class MyAudioAllViewHolder extends RecyclerView.ViewHolder{
 
     private TextView mName;
 
     private ImageView mPicture;
     private  TextView mAuthor;
 
-    public MyAudioViewHolder(View itemView) {
+    public MyAudioAllViewHolder(View itemView) {
         super(itemView);
         mPicture = (ImageView) itemView.findViewById(R.id.icon_recycle);
         mName = (TextView) itemView.findViewById(R.id.firstLine);

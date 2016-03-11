@@ -16,6 +16,11 @@
 
     <string name="action_about_us">About us</string>
 
+    <string name="action_refresh">Settings</string>
+    <string name="action_new">Settings</string>
+    <string name="logo_desc">App logo</string>
+    <string name="country_name">Nigeria</string>
+
     <string-array name="titles">
         <item>Literature</item>
         <item>Art</item>

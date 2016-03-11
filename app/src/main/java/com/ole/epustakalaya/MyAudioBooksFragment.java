@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.ole.epustakalaya.interfacesAndAdaptors.AudioBookAdapter;
+import com.ole.epustakalaya.interfacesAndAdaptors.AudioBookAllAdapter;
 import com.ole.epustakalaya.interfacesAndAdaptors.ItemClickSupport;
 import com.ole.epustakalaya.models.AllAudioBooks;
 import com.ole.epustakalaya.models.RecycleItem;
@@ -38,7 +38,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
     private ProgressBar progress;
     private LinearLayoutManager mLayoutManager;
     private PustakalayaApiInterface APIInterface;
-    private AudioBookAdapter mAdapter;
+    private AudioBookAllAdapter mAdapter;
     private List<RecycleItem> result;
 
     @Override
@@ -97,7 +97,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
 
 
         createList(response);
-        mAdapter = new AudioBookAdapter(result,mRecyclerView,getContext());
+        mAdapter = new AudioBookAllAdapter(result,mRecyclerView,getContext());
         mRecyclerView.clearFocus();
         mRecyclerView.setAdapter(mAdapter);
 
@@ -115,7 +115,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
 
                 Log.d("Cool", response.body().getContent().get(position).getTitle());
 
-                Intent i = new Intent(getActivity(), AudioDetails.class);
+                Intent i = new Intent(getActivity(), AudioAllAMainDetails.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("bookID", response.body().getContent().get(position).getId());
                 Log.d("book id", response.body().getContent().get(position).getId());

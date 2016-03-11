@@ -10,7 +10,7 @@ import com.ole.epustakalaya.R;
 /**
  * Created by bikram on 3/10/16.
  */
-public class MyAudioListViewHolder extends RecyclerView.ViewHolder {
+public class MyAudioTracksViewHolder extends RecyclerView.ViewHolder {
 
 private final TextView mFileSize;
 private final TextView mDuration;
@@ -20,7 +20,7 @@ private  TextView mAudioTitle;
 private  ImageView mPicture;
 private  TextView mAuthor;
 
-public MyAudioListViewHolder (View itemView) {
+public MyAudioTracksViewHolder(View itemView) {
         super(itemView);
 //        mPicture = (ImageView) itemView.findViewById(R.id.icon_recycle);
         mAudioTitle = (TextView) itemView.findViewById(R.id.track_title);

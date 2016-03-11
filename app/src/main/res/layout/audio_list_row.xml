@@ -25,7 +25,6 @@
         android:paddingRight="50px"
         android:paddingTop="20dp"
 
-
         android:layout_width="350dp"
         android:layout_height="80dp"
         android:background="@drawable/buttonshape"
