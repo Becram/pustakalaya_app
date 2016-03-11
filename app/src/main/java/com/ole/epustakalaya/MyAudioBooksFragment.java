@@ -50,27 +50,27 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
 
 
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setTitle(null);
-
-        Toolbar topToolBar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(topToolBar);
-        topToolBar.setLogo(R.drawable.logo);
-        topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));
-
-        List<ItemObject> rowListItem = getAllItemList();
-        lLayout = new GridLayoutManager(MainActivity.this, 4);
-
-        RecyclerView rView = (RecyclerView)findViewById(R.id.recycler_view);
-        rView.setHasFixedSize(true);
-        rView.setLayoutManager(lLayout);
-
-        RecyclerViewAdapter rcAdapter = new RecyclerViewAdapter(MainActivity.this, rowListItem);
-        rView.setAdapter(rcAdapter);
-    }
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//        setTitle(null);
+//
+//        Toolbar topToolBar = (Toolbar)findViewById(R.id.toolbar);
+//        setSupportActionBar(topToolBar);
+//        topToolBar.setLogo(R.drawable.logo);
+//        topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));
+//
+//        List<ItemObject> rowListItem = getAllItemList();
+//        lLayout = new GridLayoutManager(MainActivity.this, 4);
+//
+//        RecyclerView rView = (RecyclerView)findViewById(R.id.recycler_view);
+//        rView.setHasFixedSize(true);
+//        rView.setLayoutManager(lLayout);
+//
+//        RecyclerViewAdapter rcAdapter = new RecyclerViewAdapter(MainActivity.this, rowListItem);
+//        rView.setAdapter(rcAdapter);
+//    }
 
 
 
@@ -124,7 +124,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
 
 
         createList(response);
-        mAdapter = new AudioBookAllAdapter(result,mRecyclerView,getContext());
+        mAdapter = new AudioBookAllAdapter(getContext(),result);
         mRecyclerView.clearFocus();
         mRecyclerView.setAdapter(mAdapter);
 
@@ -133,25 +133,25 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
         Log.d("snkbdj", ToStringBuilder.reflectionToString(response));
          mAdapter.notifyDataSetChanged();
 
-        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-
-
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-
-
-                Log.d("Cool", response.body().getContent().get(position).getTitle());
-
-                Intent i = new Intent(getActivity(), AudioAllAMainDetails.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("bookID", response.body().getContent().get(position).getId());
-                Log.d("book id", response.body().getContent().get(position).getId());
-                startActivity(i);
-
-
-            }
-
-        });
+//        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+//
+//
+//            @Override
+//            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+//
+//
+//                Log.d("Cool", response.body().getContent().get(position).getTitle());
+//
+//                Intent i = new Intent(getActivity(), AudioAllAMainDetails.class);
+//                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                i.putExtra("bookID", response.body().getContent().get(position).getId());
+//                Log.d("book id", response.body().getContent().get(position).getId());
+//                startActivity(i);
+//
+//
+//            }
+//
+//        });
 
     }
 
