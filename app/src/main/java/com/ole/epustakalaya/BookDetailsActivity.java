@@ -1,5 +1,6 @@
 package com.ole.epustakalaya;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
@@ -9,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -148,7 +151,11 @@ public class BookDetailsActivity extends ActionBarActivity{
                 }
             });
 
+
             btnDownloadOpen.setOnClickListener(new View.OnClickListener() {
+
+
+
                 @Override
                 public void onClick(View view) {
                     File pdfFile = new File(Utility.pdfDirectory+book.pdfFileURL);
@@ -231,6 +238,7 @@ public class BookDetailsActivity extends ActionBarActivity{
             }
 
         }
+
 
 
         public void showSuitableButtons(boolean fileExist) {
@@ -376,7 +384,7 @@ public class BookDetailsActivity extends ActionBarActivity{
             tvLang.setText(book.lang);
 
             tvDownloadCount.setText(book.downloads+"");
-            tvViewCount.setText(book.views+"");
+            tvViewCount.setText(book.views + "");
 
             if(book.pageCount!=0){
                 ((LinearLayout)findViewById(R.id.llPageCountId)).setVisibility(View.VISIBLE);
@@ -473,17 +481,21 @@ public class BookDetailsActivity extends ActionBarActivity{
 
 //        ServerSideHelper server = new ServerSideHelper(getActivity().getApplicationContext());
 //        server.downloadFile(book,null,null);
-            if(book.pdfFileURL==null||book.pdfFileURL.equalsIgnoreCase("null")){
-                if(book.externalLink != null || !book.externalLink.equalsIgnoreCase("null")){
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(book.externalLink));
-                    startActivity(i);
-                } else {
-                    Toast.makeText(context,"No pdf or external Link is Available.",Toast.LENGTH_SHORT).show();
+
+
+                if (book.pdfFileURL == null || book.pdfFileURL.equalsIgnoreCase("null")) {
+                    if (book.externalLink != null || !book.externalLink.equalsIgnoreCase("null")) {
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(book.externalLink));
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(context, "No pdf or external Link is Available.", Toast.LENGTH_SHORT).show();
+                    }
+
+                    return;
                 }
 
-                return;
-            }
+
 
             Uri downloadFileUrl = Uri.parse(new ServerSideHelper(context).getBase_URL()+"eserv.php?pid="+book.pid+"&dsID="+book.pdfFileURL+"&mobile=1337");
             Uri localFileUrl = Uri.fromFile(new File(Utility.pdfDirectory + book.pdfFileURL));
@@ -513,7 +525,7 @@ public class BookDetailsActivity extends ActionBarActivity{
             coverImageName += book.coverImageURL.substring(book.coverImageURL.lastIndexOf("."));
 
             Uri localCoverImageUrl = Uri.fromFile(new File(Utility.pdfDirectory + coverImageName));
-            Log.v("IMAGEName",coverImageName);
+            Log.v("IMAGEName", coverImageName);
 
             DownloadManager.Request request = new DownloadManager.Request(imageUrl);
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -534,6 +546,25 @@ public class BookDetailsActivity extends ActionBarActivity{
                             Utility.showNoPDFReaderAlert(this);
                         }
         }
+    public boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG, "Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG, "Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG, "Permission is granted");
+            return true;
+        }
+
+
+    }
 
 
     private void deleteBook(Book book){

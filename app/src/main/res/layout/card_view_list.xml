@@ -14,23 +14,34 @@
 
         <ImageView
             android:id="@+id/audio_cover"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:contentDescription="@string/action_settings"
-            android:src="@drawable/three"
-            android:scaleType="centerCrop" />
+            android:src="@drawable/book_not_available"
+            android:scaleType="centerCrop"
+            />
+        <ImageView
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_centerInParent="false"
+            android:background="@drawable/audio"/>
 
         <TextView
             android:id="@+id/audio_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="2dp"
             android:textSize="13sp"
-            android:text="@string/country_name"
+            android:scrollHorizontally="true"
+
             android:textColor="@color/accent_color"
             android:gravity="center"
             android:layout_below="@+id/audio_cover"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:layout_alignParentBottom="true"
             android:background="@color/color_primary_dark"/>
 

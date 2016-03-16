@@ -35,6 +35,8 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.0'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    compile 'com.liulishuo.filedownloader:library:0.2.0'
+
 
 
 

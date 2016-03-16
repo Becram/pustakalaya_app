@@ -248,8 +248,8 @@ public class MainActivity extends ActionBarActivity  implements ExpandableListVi
 
     public void fragDo(Fragment frag,int r,String str){
     // to solve this
-  //      java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
-// check whther activity is forground or not and the only
+     //      java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
+    // check whther activity is forground or not and the only
         if(isInBackground){
             //nothing can be done
             return;
@@ -832,6 +832,7 @@ public class MainActivity extends ActionBarActivity  implements ExpandableListVi
                 System.out.println(sec);
 
                 this.parentItems.add(sec.title);
+
                 ArrayList<String> child = new ArrayList<String>();
                 for(SubSection subSec : sec.subSections){
     //                System.out.println(subSec);
@@ -960,9 +961,12 @@ public class MainActivity extends ActionBarActivity  implements ExpandableListVi
             /*roshan off*/
 
             if (lastExpandedGroupPosition!= -1 && lastExpandedGroupPosition != groupPosition){
+
                 actionBar.setSubtitle(null);
                 expandableListView.collapseGroup(lastExpandedGroupPosition);
+
             }
+
             lastExpandedGroupPosition = groupPosition;
 
         }

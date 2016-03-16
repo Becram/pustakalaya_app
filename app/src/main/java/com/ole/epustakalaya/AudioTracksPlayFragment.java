@@ -1,6 +1,8 @@
 package com.ole.epustakalaya;
 
+import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -48,6 +50,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     public static String AudioDirectory = Environment.getExternalStorageDirectory()+"/Epustakalaya/AudioBooks/";
     public ListView listView;
     protected String BASE_URL="http://www.pustakalaya.org";
+    private boolean pause_status=false;
 
     private TextView mSelectedTrackTitle;
 
@@ -60,10 +63,13 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     private TextView mSelectedTrackChapter;
     private TextView mSelectedTrackStatus;
     private SeekBar mSeekBar;
+     DownloadManager downloadManger;
     Handler seekHandler = new Handler();
     private View toolbar_view;
     private static int a=0;
     private BroadcastReceiver downloadCompleteBroadcastReceiver;
+    private Context context;
+//    private Context context;
 
 
     @Override
@@ -212,6 +218,10 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         Log.d("track", String.valueOf(total));
 
 
+//        downloadManger = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+
+
+
     }
 
     Runnable run = new Runnable() {
@@ -251,6 +261,18 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     private void togglePlayPause() {
         if (mMediaPlayer.isPlaying()) {
             mMediaPlayer.pause();
+            boolean pause=true;
+            mPlayerControl.setImageResource(R.drawable.play_new);
+            toolbar_view.setVisibility(View.VISIBLE);
+
+
+//            mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
+            mSelectedTrackStatus.setText(R.string.paused);
+        }
+
+        else if(pause_status){
+
+            mMediaPlayer.start();
             mPlayerControl.setImageResource(R.drawable.play_new);
             toolbar_view.setVisibility(View.VISIBLE);
 
@@ -258,7 +280,9 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
 //            mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
             mSelectedTrackStatus.setText(R.string.paused);
 
-        } else {
+
+            }
+         else {
             mMediaPlayer.start();
             SeekUpdation();
 //            mSeekBar.setMax(mMediaPlayer.getDuration());
@@ -293,6 +317,10 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
 
                 Log.d("item", String.valueOf(position));
                 if (mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.stop();
+                    mMediaPlayer.reset();
+                }else {
+                    Log.d("paused","from inside");
                     mMediaPlayer.stop();
                     mMediaPlayer.reset();
                 }

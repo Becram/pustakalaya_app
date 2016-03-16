@@ -1,7 +1,11 @@
 package com.ole.epustakalaya.interfacesAndAdaptors;
 
+import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +23,7 @@ import com.ole.epustakalaya.interfacesAndAdaptors.OnLoadMoreListener;
 
 import com.ole.epustakalaya.models.Track;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -37,6 +42,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
     private MainActivity mainActivity;
     private int lastVisibleItem, totalItemCount;
     private int visibleThreshold = 2;
+    private DownloadManager downloadmanager;
 
     private boolean loading;
     private OnLoadMoreListener onLoadMoreListener;
@@ -109,7 +115,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
         final Track mTrack=mTrackList.get(position);
         if (HOLDER instanceof MyAudioTracksViewHolder) {
             ((MyAudioTracksViewHolder) HOLDER).getTextViewAudioTitle().setText(mTrack.track_title);
-            Log.d("title_test", mTrack.track_title);
+            Log.d("title_test", mTrack.getTitle());
 
                     ((MyAudioTracksViewHolder) HOLDER).getFileSize().setText(humanReadableByteCount(mTrack.track_size, true));
             ((MyAudioTracksViewHolder) HOLDER).getDuration().setText(getConvertedTime(mTrack.track_duration));
@@ -118,37 +124,50 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public void onClick(View v) {
 
-                    Toast.makeText(v.getContext(), "downloader at " + String.valueOf(position), Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), "downloader at " + mTrack.getTrackURL(), Toast.LENGTH_LONG).show();
+                    DownloadManager downloadmanager = (DownloadManager) myContext.getSystemService(Context.DOWNLOAD_SERVICE);
+                    Uri uri = Uri
+                            .parse(BASE_URL + mTrack.getTrackURL());
+
+                    File direct = new File(Environment.getExternalStorageDirectory()
+                            + "/Epustakalaya/audio");
+
+                    if (!direct.exists()) {
+                        direct.mkdirs();
+                    }
+
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
+                    request.setAllowedNetworkTypes(
+                            DownloadManager.Request.NETWORK_WIFI
+                                    | DownloadManager.Request.NETWORK_MOBILE)
+                            .setAllowedOverRoaming(false).setTitle(mTrack.getTitle())
+                            .setDescription("Downloading ...")
+                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/", mTrack.getTrackURL());
 
 
-//                    Uri downloadFileUrl =  Uri.parse(BASE_URL+mTrack.track_url);
-//
-//                    Uri localFileUrl = Uri.fromFile(new File(AudioDirectory+ mTrack.track_title));
-//                    DownloadManager.Request request = new DownloadManager.Request(downloadFileUrl);
-//                    request.setDescription("Downloading ...")
-//                            .setTitle(mTrack.track_title);
-//                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-//                        // only for honeycomb
-//                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-//                    }
-//
-//                    //The server need to send the content-length on http response
-//                    //http://stackoverflow.com/questions/26401069/android-download-manager-always-displays-indefinite-progress-bar-and-not-progres
-//                    request.setDestinationUri(localFileUrl);
-//                    request.setVisibleInDownloadsUi(true);
-////                    dbWrite(true);
-//                    myDownloadReference = downloadManger.enqueue(request);
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        // only for honeycomb
+                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    }
+//                    File mydownload = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+ "/AudioBooks");
+//                    request.setDestinationInExternalPublicDir(mydownload.getAbsolutePath(),mTrack.getTitle());
+
+
+
+
+                     downloadmanager.enqueue(request);
 
 
                 }
             });
+
 
 //            Log.d("book chap", mTrack.track_title);
 
 
         } else {
             Log.d("loading", "binder");
-           ((ProgressAudio) HOLDER).progressAudio.setIndeterminate(true);
+            ((ProgressAudio) HOLDER).progressAudio.setIndeterminate(true);
 //            ((ProgressAudio) HOLDER).progressAudio.setIndeterminate(true);
         }
 

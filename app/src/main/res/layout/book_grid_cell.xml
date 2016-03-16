@@ -1,32 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="80dp"
+    android:layout_height="100dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="8dp"
+    android:layout_marginBottom="16dp">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="120dp"
-        android:layout_margin="1dp">
-        <!--android:background="@drawable/abc_action_bar_item_background_material">-->
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/ivCoverImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-             />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="@string/action_settings"
+            android:src="@drawable/book_not_available"
+            android:scaleType="centerCrop"
+            />
 
-        <!--<ProgressBar
-            android:id="@+id/progressBar_img"
-            android:layout_width="wrap_content"
+
+        <TextView
+            android:id="@+id/audio_author"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />-->
+            android:padding="2dp"
+            android:textSize="13sp"
+            android:scrollHorizontally="true"
+            android:text="Book Title"
+            android:textColor="@color/accent_color"
+            android:gravity="center"
+            android:layout_below="@+id/audio_cover"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_primary_dark"/>
 
     </RelativeLayout>
 
-</FrameLayout>
+</android.support.v7.widget.CardView>

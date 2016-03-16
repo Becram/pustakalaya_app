@@ -7,7 +7,7 @@
 
     <FrameLayout
         android:id="@+id/vg_cover"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         tools:ignore="UselessParent" >
@@ -22,12 +22,14 @@
                 android:id="@+id/ivCoverImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/abc_action_bar_item_background_material"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
             <ProgressBar
                 android:id="@+id/progressBar_img"

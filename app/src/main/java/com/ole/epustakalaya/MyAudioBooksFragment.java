@@ -85,11 +85,11 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        lLayout = new GridLayoutManager(getContext(), 3);
+        mRecyclerView.setLayoutManager(lLayout);
         Retrofit_Reloader("date");
 //        progress.setVisibility(View.VISIBLE);
-        lLayout = new GridLayoutManager(getContext(), 3);
+
 
 
 
@@ -133,25 +133,25 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
         Log.d("snkbdj", ToStringBuilder.reflectionToString(response));
          mAdapter.notifyDataSetChanged();
 
-//        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-//
-//
-//            @Override
-//            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-//
-//
-//                Log.d("Cool", response.body().getContent().get(position).getTitle());
-//
-//                Intent i = new Intent(getActivity(), AudioAllAMainDetails.class);
-//                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                i.putExtra("bookID", response.body().getContent().get(position).getId());
-//                Log.d("book id", response.body().getContent().get(position).getId());
-//                startActivity(i);
-//
-//
-//            }
-//
-//        });
+        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+
+
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+
+
+                Log.d("Title clicked", response.body().getContent().get(position).getTitle());
+
+                Intent i = new Intent(getActivity(), AudioAllAMainDetails.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("bookID", response.body().getContent().get(position).getId());
+                Log.d("book id", response.body().getContent().get(position).getId());
+                startActivity(i);
+
+
+            }
+
+        });
 
     }
 

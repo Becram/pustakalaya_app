@@ -1,9 +1,11 @@
 package com.ole.epustakalaya.interfacesAndAdaptors;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ole.epustakalaya.R;
 
@@ -29,6 +31,15 @@ public MyAudioTracksViewHolder(View itemView) {
         mDownload = (ImageView) itemView.findViewById(R.id.downloader);
 //        itemView.setOnClickListener(this);
 
+//        mDownload.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                        Log.d("download clicked","cool");
+//
+//                }
+//        });
+
 
         }
 
@@ -49,11 +60,7 @@ public ImageView getDownloader() {
         return mDownload;
         }
 
-//    @Override
-//    public void onClick(View v) {
-//
-//        Track t=new Track();
-//        Log.d("clicked", t.getTrackURL());
-//
-//    }
-        }
+
+
+
+}

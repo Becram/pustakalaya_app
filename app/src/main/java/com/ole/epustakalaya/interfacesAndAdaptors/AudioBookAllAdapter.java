@@ -89,7 +89,7 @@ public class AudioBookAllAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        ((MyAudioAllViewHolder) holder).getTextViewName().setText(mBooklist.get(position).getAuthor());
+//        ((MyAudioAllViewHolder) holder).getTextViewName().setText(mBooklist.get(position).getAuthor());
         ((MyAudioAllViewHolder) holder).getAuthorViewName().setText(mBooklist.get(position).getAuthor());
 //        holder.mPicture.setImageResource(mBooklist.get(position).getImage());
         Picasso.with(context).load(BASE_URL + mBooklist.get(position).getImage())
