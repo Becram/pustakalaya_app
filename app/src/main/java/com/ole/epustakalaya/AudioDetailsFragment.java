@@ -90,7 +90,7 @@ public class AudioDetailsFragment extends Fragment implements Callback<ModelAudi
         APIInterface=retrofit.create(PustakalayaApiInterface.class);
 //        face=Typeface.createFromAsset(getActivity().getAssets(), "fonts/Kelson Sans Light.otf");
 
-        Log.d("Bookid from details", AudioAllAMainDetails.bookid);
+//        Log.d("Bookid from details", AudioAllAMainDetails.bookid);
         Call<ModelAudioBookDetails> call = APIInterface.getAudioBooksDetails(AudioAllAMainDetails.bookid);
 
         call.enqueue(this);

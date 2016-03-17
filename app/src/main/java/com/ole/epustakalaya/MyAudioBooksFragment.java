@@ -85,7 +85,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        lLayout = new GridLayoutManager(getContext(), 3);
+        lLayout = new GridLayoutManager(getContext(), 4);
         mRecyclerView.setLayoutManager(lLayout);
         Retrofit_Reloader("date");
 //        progress.setVisibility(View.VISIBLE);
