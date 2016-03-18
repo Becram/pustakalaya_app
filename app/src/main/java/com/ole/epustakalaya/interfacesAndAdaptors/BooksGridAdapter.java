@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ole.epustakalaya.R;
@@ -29,6 +30,7 @@ public class BooksGridAdapter extends BaseAdapter {
 
     private Context context;
     int placeholder = R.drawable.book_not_available;
+    String book_placeholder="N/A";
     public Book[] books;
     /*ImageLoader imageLoader;*/
 
@@ -40,6 +42,8 @@ public class BooksGridAdapter extends BaseAdapter {
         this.context = context;
         this.books = books;
         Log.w("bookgridadapter book count", String.valueOf(getCount()));
+//        Log.w("book Title", String.valueOf(getItem(0)));
+
         /*imageLoader = new ImageLoader(context);*/
 //        baseUrl = new ServerSideHelper(context).getBase_URL();
     }
@@ -62,12 +66,14 @@ public class BooksGridAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
+
         if (convertView==null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView=inflater.inflate(R.layout.book_grid_cell, parent,false);
             viewHolder = new ViewHolder();
             viewHolder.mainImg = (ImageView) convertView.findViewById(R.id.ivCoverImage);
+            viewHolder.mainTitle = (TextView) convertView.findViewById(R.id.ivBookTitle);
             convertView.setTag(viewHolder);
         }
         else {
@@ -75,6 +81,7 @@ public class BooksGridAdapter extends BaseAdapter {
         }
 
         viewHolder.mainImg.setImageResource(placeholder);
+        viewHolder.mainTitle.setText(book_placeholder);
 
 //        new ImgLoad(context,mainImg,progressBar).execute(books[position].coverImageURL);
 //        ImageLoader imageLoader = new ImageLoader(context);
@@ -83,14 +90,20 @@ public class BooksGridAdapter extends BaseAdapter {
            File file = new File(Environment.getExternalStorageDirectory(),"/Epustakalaya/pdf/"+books[position].coverImageURL);
             if(file.exists()){
                 Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                viewHolder.mainImg.setImageBitmap(myBitmap);
+//                viewHolder.mainImg.setImageBitmap(myBitmap);
                 Log.v("ImageSize","ImageLoaded form local storage");
             } else {
-                loadImageFromUrl(books[position].coverImageURL,viewHolder.mainImg);
+                Log.d("book from gride view","not local");
+                loadImageFromUrl(books[position].coverImageURL, viewHolder.mainImg);
+//                viewHolder.mainTitle.setText(books[position].title);
+
+
             }
         } else {
             loadImageFromUrl(books[position].coverImageURL,viewHolder.mainImg);
-        }
+            viewHolder.mainTitle.setText(books[position].title);
+            Log.d("title",books[position].title);
+       }
         return convertView;
     }
 
@@ -106,6 +119,7 @@ public class BooksGridAdapter extends BaseAdapter {
                     @Override
                     public void onSuccess() {
                         Log.v("ImageSize","Successed?");
+
                     }
 
                     @Override
@@ -113,10 +127,12 @@ public class BooksGridAdapter extends BaseAdapter {
                         Log.v("ImageSize","Error? Why?");
                     }
                 });
+
     }
 
     private class ViewHolder {
         ImageView mainImg;
+        TextView mainTitle;
     }
 
 }

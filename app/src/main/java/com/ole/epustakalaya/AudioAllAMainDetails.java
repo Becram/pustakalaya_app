@@ -24,7 +24,8 @@ public class AudioAllAMainDetails extends ActionBarActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private PustakalayaApiInterface APIInterface;
-    public static String bookid;
+    public static String get_bookid;
+    public static String get_booktitle;
     protected String BASE_URL="http://www.pustakalaya.org";
 
 
@@ -43,7 +44,8 @@ public class AudioAllAMainDetails extends ActionBarActivity {
 
 //      get book id from
 
-        bookid=getIntent().getStringExtra("bookID");
+        get_bookid=getIntent().getStringExtra("bookID");
+        get_booktitle=getIntent().getStringExtra("bookTitle");
 
 //        Bundle bund=new Bundle();
 //        bund.putString("bookid",bookid);

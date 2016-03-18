@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ole.epustakalaya.AudioTracksPlayFragment;
 import com.ole.epustakalaya.MainActivity;
 import com.ole.epustakalaya.R;
 import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioAllViewHolder;
@@ -117,9 +118,11 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
             ((MyAudioTracksViewHolder) HOLDER).getTextViewAudioTitle().setText(mTrack.track_title);
             Log.d("title_test", mTrack.getTitle());
 
-                    ((MyAudioTracksViewHolder) HOLDER).getFileSize().setText(humanReadableByteCount(mTrack.track_size, true));
+            ((MyAudioTracksViewHolder) HOLDER).getFileSize().setText(humanReadableByteCount(mTrack.track_size, true));
             ((MyAudioTracksViewHolder) HOLDER).getDuration().setText(getConvertedTime(mTrack.track_duration));
-        //    ((MyAudioTracksViewHolder) HOLDER).getTextViewAudioTitle().setTypeface(face);
+        //    ((MyAudioTracksViewHolder) HOLDER).getTextViewAudioTitle().setTypeface(face);f
+
+            Log.d("book title",AudioTracksPlayFragment.book_title);
             ((MyAudioTracksViewHolder) HOLDER).getDownloader().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

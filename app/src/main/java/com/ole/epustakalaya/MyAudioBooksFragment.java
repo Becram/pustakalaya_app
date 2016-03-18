@@ -145,6 +145,8 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
                 Intent i = new Intent(getActivity(), AudioAllAMainDetails.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("bookID", response.body().getContent().get(position).getId());
+                i.putExtra("bookTitle", response.body().getContent().get(position).getTitle());
+
                 Log.d("book id", response.body().getContent().get(position).getId());
                 startActivity(i);
 

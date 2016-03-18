@@ -59,7 +59,7 @@
         android:paddingTop="10dp"
 
         android:id="@+id/downloader"
-        android:src="@drawable/download166"
+        android:src="@drawable/download_audio"
         android:layout_alignBottom="@+id/duration"
         android:layout_alignRight="@+id/size"
         android:layout_alignEnd="@+id/size" />

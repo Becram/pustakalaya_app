@@ -82,6 +82,7 @@ public class HomepageFragment extends Fragment /*implements ActionBar.TabListene
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_recents);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_nearby);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_favorites);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_recents);
 
 
 
@@ -141,6 +142,7 @@ public class HomepageFragment extends Fragment /*implements ActionBar.TabListene
         adapter.addFragment(new EditorsPicksFragment(), "Editor's Pick");
         adapter.addFragment(new MyAudioBooksFragment(), "Audio Books");
         adapter.addFragment(new LatestBooksFragment(), "Latest Books");
+        adapter.addFragment(new MyBooksFragment(), "My Books");
         viewPager.setAdapter(adapter);
     }
 

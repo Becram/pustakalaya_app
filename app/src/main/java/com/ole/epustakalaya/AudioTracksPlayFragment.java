@@ -69,6 +69,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     private static int a=0;
     private BroadcastReceiver downloadCompleteBroadcastReceiver;
     private Context context;
+    public static String book_title;
 //    private Context context;
 
 
@@ -185,7 +186,9 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIInterface = retrofit.create(PustakalayaApiInterface.class);
-        Call<ModelAudioBookDetails> call = APIInterface.getAudioBooksDetails(AudioAllAMainDetails.bookid);
+        Call<ModelAudioBookDetails> call = APIInterface.getAudioBooksDetails(AudioAllAMainDetails.get_bookid);
+        book_title=AudioAllAMainDetails.get_booktitle;
+
 
         call.enqueue(this);
 
@@ -310,6 +313,8 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
                 Track track = mListItems.get(position);
 
                 mSelectedTrackTitle.setText(response.body().getContent().getTitle());
+
+
 
                 mSelectedTrackChapter.setText(track.getTitle());
 

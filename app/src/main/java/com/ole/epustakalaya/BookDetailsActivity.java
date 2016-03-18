@@ -173,6 +173,8 @@ public class BookDetailsActivity extends ActionBarActivity{
 
 
 
+
+
             //register the broadcast receiver
             IntentFilter intentFilter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
             downloadCompleteBroadcastReceiver = new BroadcastReceiver() {
@@ -238,8 +240,6 @@ public class BookDetailsActivity extends ActionBarActivity{
             }
 
         }
-
-
 
         public void showSuitableButtons(boolean fileExist) {
             if(fileExist){
@@ -442,6 +442,7 @@ public class BookDetailsActivity extends ActionBarActivity{
 */
         }
 
+
         public class GetBookDetailsAsync extends AsyncTask<String, Void, Void> {
             @Override
             protected void onPreExecute(){
@@ -479,11 +480,16 @@ public class BookDetailsActivity extends ActionBarActivity{
         @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         void downloadPDF(){
 
+            if (Build.VERSION.SDK_INT >= 23) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+            }
+
 //        ServerSideHelper server = new ServerSideHelper(getActivity().getApplicationContext());
 //        server.downloadFile(book,null,null);
 
 
-                if (book.pdfFileURL == null || book.pdfFileURL.equalsIgnoreCase("null")) {
+                if (book.pdfFileURL == null || book.pdfFileURL.equalsIgnoreCase("null") && isStoragePermissionGranted()) {
                     if (book.externalLink != null || !book.externalLink.equalsIgnoreCase("null")) {
                         Intent i = new Intent(Intent.ACTION_VIEW);
                         i.setData(Uri.parse(book.externalLink));

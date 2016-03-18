@@ -91,7 +91,7 @@ public class AudioDetailsFragment extends Fragment implements Callback<ModelAudi
 //        face=Typeface.createFromAsset(getActivity().getAssets(), "fonts/Kelson Sans Light.otf");
 
 //        Log.d("Bookid from details", AudioAllAMainDetails.bookid);
-        Call<ModelAudioBookDetails> call = APIInterface.getAudioBooksDetails(AudioAllAMainDetails.bookid);
+        Call<ModelAudioBookDetails> call = APIInterface.getAudioBooksDetails(AudioAllAMainDetails.get_bookid);
 
         call.enqueue(this);
     }
