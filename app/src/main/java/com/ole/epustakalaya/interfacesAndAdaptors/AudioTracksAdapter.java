@@ -122,12 +122,12 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
             ((MyAudioTracksViewHolder) HOLDER).getDuration().setText(getConvertedTime(mTrack.track_duration));
         //    ((MyAudioTracksViewHolder) HOLDER).getTextViewAudioTitle().setTypeface(face);f
 
-            Log.d("book title",AudioTracksPlayFragment.book_title);
+            Log.d("regex",StringRegx(AudioTracksPlayFragment.book_title));
             ((MyAudioTracksViewHolder) HOLDER).getDownloader().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Toast.makeText(v.getContext(), "downloader at " + mTrack.getTrackURL(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), "downloader at " +StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL(), Toast.LENGTH_LONG).show();
                     DownloadManager downloadmanager = (DownloadManager) myContext.getSystemService(Context.DOWNLOAD_SERVICE);
                     Uri uri = Uri
                             .parse(BASE_URL + mTrack.getTrackURL());
@@ -145,7 +145,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
                                     | DownloadManager.Request.NETWORK_MOBILE)
                             .setAllowedOverRoaming(false).setTitle(mTrack.getTitle())
                             .setDescription("Downloading ...")
-                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/", mTrack.getTrackURL());
+                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
 
 
                     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -179,6 +179,16 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
 
 
+
+
+
+    }
+
+    public  String StringRegx(String s) {
+
+        String regexedString=s.replaceAll("[-+.^:,'()]", " ").trim();
+
+        return regexedString.replaceAll("\\s","");
 
 
     }

@@ -76,5 +76,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="paused">paused</string>
     <string name="playing">playing</string>
+    <string name="permission_storage">permissionStorage</string>
 
 </resources>

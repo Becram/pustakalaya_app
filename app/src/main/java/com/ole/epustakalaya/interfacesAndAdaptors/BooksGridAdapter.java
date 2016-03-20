@@ -102,7 +102,7 @@ public class BooksGridAdapter extends BaseAdapter {
         } else {
             loadImageFromUrl(books[position].coverImageURL,viewHolder.mainImg);
             viewHolder.mainTitle.setText(books[position].title);
-            Log.d("title",books[position].title);
+//            Log.d("title",books[position].title);
        }
         return convertView;
     }

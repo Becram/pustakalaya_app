@@ -2,6 +2,7 @@ package com.ole.epustakalaya;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
@@ -164,7 +165,8 @@ public class BookDetailsActivity extends ActionBarActivity{
                         openPDFfile(uriPath);
                     } else {
                         Toast.makeText(context,"Oh! The file doesn't exist. We are trying to redownload it",Toast.LENGTH_SHORT).show();
-                        downloadPDF();
+//                        downloadPDF();
+                        downloadAfterTestPermission();
                     }
 
                 }
@@ -290,7 +292,8 @@ public class BookDetailsActivity extends ActionBarActivity{
                                 .setAction("downld")    // action i.e.  Play
                                 .setLabel("downld clicked from book details")    // label i.e.  any meta-data
                                 .build());
-                        downloadPDF();
+//                        downloadPDF();
+                        downloadAfterTestPermission();
                     }
                 });
             }
@@ -476,14 +479,33 @@ public class BookDetailsActivity extends ActionBarActivity{
             book.isDownloading = isDownloading;
             db.addBook(book);
         }
+        private void  downloadAfterTestPermission() {
+
+
+            if (Build.VERSION.SDK_INT >= 23) {
+
+                Log.d("permission","seems like permission needs to be granted");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+            }
+            else {
+
+                downloadPDF();
+            }
+
+        }
+
+
+
+
 
         @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         void downloadPDF(){
 
-            if (Build.VERSION.SDK_INT >= 23) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-
-            }
+//            if (Build.VERSION.SDK_INT >= 23) {
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+//
+//            }
 
 //        ServerSideHelper server = new ServerSideHelper(getActivity().getApplicationContext());
 //        server.downloadFile(book,null,null);
@@ -522,6 +544,32 @@ public class BookDetailsActivity extends ActionBarActivity{
             saveCoverImge();
 
         }
+    private static void requestPermission(final Context context){
+        if(ActivityCompat.shouldShowRequestPermissionRationale((Activity)context,Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            // Provide an additional rationale to the user if the permission was not granted
+            // and the user would benefit from additional context for the use of the permission.
+            // For example if the user has previously denied the permission.
+
+            new AlertDialog.Builder(context)
+                    .setMessage(context.getResources().getString(R.string.permission_storage))
+                    .setPositiveButton("tamam", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions((Activity) context,
+                                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                   1);
+                        }
+                    }).show();
+
+        }else {
+            // permission has not been granted yet. Request it directly.
+            ActivityCompat.requestPermissions((Activity)context,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    1);
+        }
+    }
+
+
 
         @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         private void saveCoverImge(){
