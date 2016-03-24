@@ -2,6 +2,7 @@ package com.ole.epustakalaya.models;
 
 /**
  * Created by bikram on 2/12/16.
+ *
  */
 public class AudioDetails {
 
