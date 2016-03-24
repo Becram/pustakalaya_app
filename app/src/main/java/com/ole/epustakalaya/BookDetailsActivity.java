@@ -165,8 +165,8 @@ public class BookDetailsActivity extends ActionBarActivity{
                         openPDFfile(uriPath);
                     } else {
                         Toast.makeText(context,"Oh! The file doesn't exist. We are trying to redownload it",Toast.LENGTH_SHORT).show();
-//                        downloadPDF();
-                        downloadAfterTestPermission();
+                        downloadPDF();
+//                        downloadAfterTestPermission();
                     }
 
                 }
@@ -292,8 +292,8 @@ public class BookDetailsActivity extends ActionBarActivity{
                                 .setAction("downld")    // action i.e.  Play
                                 .setLabel("downld clicked from book details")    // label i.e.  any meta-data
                                 .build());
-//                        downloadPDF();
-                        downloadAfterTestPermission();
+                        downloadPDF();
+//                        downloadAfterTestPermission();
                     }
                 });
             }
@@ -442,7 +442,7 @@ public class BookDetailsActivity extends ActionBarActivity{
         /*ViewGroup.LayoutParams params = ivBookCoverPic.getLayoutParams();
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         ivBookCoverPic.setLayoutParams(params);
-*/
+     */
         }
 
 
@@ -496,22 +496,10 @@ public class BookDetailsActivity extends ActionBarActivity{
         }
 
 
-
-
-
         @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         void downloadPDF(){
 
-//            if (Build.VERSION.SDK_INT >= 23) {
-//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-//
-//            }
-
-//        ServerSideHelper server = new ServerSideHelper(getActivity().getApplicationContext());
-//        server.downloadFile(book,null,null);
-
-
-                if (book.pdfFileURL == null || book.pdfFileURL.equalsIgnoreCase("null") && isStoragePermissionGranted()) {
+                if (book.pdfFileURL == null || book.pdfFileURL.equalsIgnoreCase("null") ) {
                     if (book.externalLink != null || !book.externalLink.equalsIgnoreCase("null")) {
                         Intent i = new Intent(Intent.ACTION_VIEW);
                         i.setData(Uri.parse(book.externalLink));

@@ -6,9 +6,11 @@ package com.ole.epustakalaya.models;
 public class AudioBook {
 
     public static class Chapter {
+
         public String id;
         public String fileURL;
         public String title;
+
     }
 
     public String id;

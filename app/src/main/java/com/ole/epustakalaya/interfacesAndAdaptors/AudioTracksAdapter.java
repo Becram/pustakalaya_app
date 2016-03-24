@@ -1,5 +1,6 @@
 package com.ole.epustakalaya.interfacesAndAdaptors;
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,10 +20,12 @@ import android.widget.Toast;
 import com.ole.epustakalaya.AudioTracksPlayFragment;
 import com.ole.epustakalaya.MainActivity;
 import com.ole.epustakalaya.R;
+import com.ole.epustakalaya.helper.MyBooksDB;
 import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioAllViewHolder;
 import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioTracksViewHolder;
 import com.ole.epustakalaya.interfacesAndAdaptors.OnLoadMoreListener;
 
+import com.ole.epustakalaya.models.Book;
 import com.ole.epustakalaya.models.Track;
 
 import java.io.File;
@@ -40,7 +44,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
 
     private Context myContext;
-    private MainActivity mainActivity;
+    private AudioTracksPlayFragment audioTracksActivity;
     private int lastVisibleItem, totalItemCount;
     private int visibleThreshold = 2;
     private DownloadManager downloadmanager;
@@ -53,6 +57,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
     private List<Track> mTrackList;
     private Typeface face;
     private long myDownloadReference;
+    private Book book;
 
 
     public AudioTracksAdapter(List<Track> BookList, RecyclerView recyclerV, Context m) {
@@ -126,60 +131,59 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
             ((MyAudioTracksViewHolder) HOLDER).getDownloader().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    if (Build.VERSION.SDK_INT >= 23) {
+//
+//                        Log.d("permission", "seems like permission needs to be granted");
+////                        ActivityCompat.requestPermissions(audioTracksActivity.getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+//
+//                    } else {
 
-                    Toast.makeText(v.getContext(), "downloader at " +StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL(), Toast.LENGTH_LONG).show();
-                    DownloadManager downloadmanager = (DownloadManager) myContext.getSystemService(Context.DOWNLOAD_SERVICE);
-                    Uri uri = Uri
-                            .parse(BASE_URL + mTrack.getTrackURL());
+                        Toast.makeText(v.getContext(), "downloader at " + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL(), Toast.LENGTH_LONG).show();
+                        DownloadManager downloadmanager = (DownloadManager) myContext.getSystemService(Context.DOWNLOAD_SERVICE);
+                        Uri uri = Uri
+                                .parse(BASE_URL + mTrack.getTrackURL());
 
-                    File direct = new File(Environment.getExternalStorageDirectory()
-                            + "/Epustakalaya/audio");
+                        File direct = new File(Environment.getExternalStorageDirectory()
+                                + "/Epustakalaya/audio");
 
-                    if (!direct.exists()) {
-                        direct.mkdirs();
-                    }
+                        if (!direct.exists()) {
+                            direct.mkdirs();
+                        }
 
-                    DownloadManager.Request request = new DownloadManager.Request(uri);
-                    request.setAllowedNetworkTypes(
-                            DownloadManager.Request.NETWORK_WIFI
-                                    | DownloadManager.Request.NETWORK_MOBILE)
-                            .setAllowedOverRoaming(false).setTitle(mTrack.getTitle())
-                            .setDescription("Downloading ...")
-                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
+                        DownloadManager.Request request = new DownloadManager.Request(uri);
+                        request.setAllowedNetworkTypes(
+                                DownloadManager.Request.NETWORK_WIFI
+                                        | DownloadManager.Request.NETWORK_MOBILE)
+                                .setAllowedOverRoaming(false).setTitle(mTrack.getTitle())
+                                .setDescription("Downloading ...")
+                                .setDestinationInExternalPublicDir("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
+//                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
 
 
-                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                        // only for honeycomb
-                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                    }
+                        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                            // only for honeycomb
+                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                        }
 //                    File mydownload = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+ "/AudioBooks");
 //                    request.setDestinationInExternalPublicDir(mydownload.getAbsolutePath(),mTrack.getTitle());
 
 
+                        downloadmanager.enqueue(request);
 
 
-                     downloadmanager.enqueue(request);
-
-
-                }
+                    }
+//                }
             });
 
 
 //            Log.d("book chap", mTrack.track_title);
 
-
+//            dbWrite(true);
         } else {
             Log.d("loading", "binder");
             ((ProgressAudio) HOLDER).progressAudio.setIndeterminate(true);
 //            ((ProgressAudio) HOLDER).progressAudio.setIndeterminate(true);
         }
-
-
-
-
-
-
-
 
 
     }
@@ -200,7 +204,11 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
         String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
         return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
-
+    public void dbWrite(boolean isDownloading){
+        MyBooksDB db = new MyBooksDB(myContext);
+        book.isDownloading = isDownloading;
+        db.addBook(book);
+    }
 
     public static String getConvertedTime(double value) {
         String output;

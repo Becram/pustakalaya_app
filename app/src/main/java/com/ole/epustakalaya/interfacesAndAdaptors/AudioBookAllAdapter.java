@@ -2,14 +2,13 @@ package com.ole.epustakalaya.interfacesAndAdaptors;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ole.epustakalaya.R;
-import com.ole.epustakalaya.models.RecycleItem;
+import com.ole.epustakalaya.models.AudioDetails;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,10 +20,10 @@ public class AudioBookAllAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private final int VIEW_ITEM = 1;
     private final int VIEW_PROG = 0;
-    private final List<RecycleItem> mBooklist;
+    private final List<AudioDetails> mBooklist;
     private final Context context;
 
-//    private List<RecycleItem> mDataset;
+//    private List<AudioDetails> mDataset;
 
     // The minimum amount of items to have below your current scroll position before loading more.
     private int visibleThreshold = 2;
@@ -42,13 +41,13 @@ public class AudioBookAllAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private Typeface face;
 
-    public AudioBookAllAdapter(Context context, List<RecycleItem> itemList) {
+    public AudioBookAllAdapter(Context context, List<AudioDetails> itemList) {
         this.mBooklist = itemList;
         this.context = context;
     }
 
 
-//    public AudioBookAllAdapter(List<RecycleItem> BookList, RecyclerView recyclerView, Context con) {
+//    public AudioBookAllAdapter(List<AudioDetails> BookList, RecyclerView recyclerView, Context con) {
 //        this.mBookList = BookList;
 //        this.mContext=con;
 //        if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
