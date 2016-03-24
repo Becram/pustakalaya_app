@@ -3,7 +3,7 @@ package com.ole.epustakalaya.models;
 /**
  * Created by bikram on 2/12/16.
  */
-public class RecycleItem {
+public class AudioDetails {
 
     public String title;
     public String Author;

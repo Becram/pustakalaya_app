@@ -3,6 +3,7 @@ package com.ole.epustakalaya;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +45,7 @@ import retrofit.Retrofit;
 /**
  * Created by bikram on 3/10/16.
  */
-public class AudioTracksPlayFragment extends Fragment implements Callback<ModelAudioBookDetails>, SeekBar.OnSeekBarChangeListener{
+public class AudioTracksPlayFragment extends Fragment implements Callback<ModelAudioBookDetails>, SeekBar.OnSeekBarChangeListener {
 
     private List<Track> mListItems;
     private AudioTracksAdapter mAdapter;
@@ -70,12 +73,18 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     private BroadcastReceiver downloadCompleteBroadcastReceiver;
     private Context context;
     public static String book_title;
+    private TelephonyManager telManager;
+    public static String book_id;
 //    private Context context;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TelephonyManager mgr = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        if(mgr != null) {
+            mgr.listen(PhoneStatus, PhoneStateListener.LISTEN_CALL_STATE);
+        }
 
 
     }
@@ -188,6 +197,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         APIInterface = retrofit.create(PustakalayaApiInterface.class);
         Call<ModelAudioBookDetails> call = APIInterface.getAudioBooksDetails(AudioAllAMainDetails.get_bookid);
         book_title=AudioAllAMainDetails.get_booktitle;
+        book_id=AudioAllAMainDetails.get_bookid;
 
 
         call.enqueue(this);
@@ -341,7 +351,9 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
                     mMediaPlayer.prepareAsync();
 
                 } catch (IOException e) {
+
                     e.printStackTrace();
+
                 }
             }
         });
@@ -408,8 +420,26 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
+    PhoneStateListener PhoneStatus=new PhoneStateListener(){
+
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+            if (state == TelephonyManager.CALL_STATE_RINGING) {
+                mMediaPlayer.pause();
+                Log.d("call status","phone recieved");
+
+                //Incoming call: Pause music
+            } else if(state == TelephonyManager.CALL_STATE_IDLE) {
+                //Not in call: Play music
+            } else if(state == TelephonyManager.CALL_STATE_OFFHOOK) {
+//                mMediaPlayer.start();
+                //A call is dialing, active or on hold
+            }
+            super.onCallStateChanged(state, incomingNumber);
+        }
 
 
+    };
 
 
 }

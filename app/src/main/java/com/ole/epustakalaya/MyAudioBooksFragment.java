@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.ProgressBar;
 import com.ole.epustakalaya.interfacesAndAdaptors.AudioBookAllAdapter;
 import com.ole.epustakalaya.interfacesAndAdaptors.ItemClickSupport;
 import com.ole.epustakalaya.models.AllAudioBooks;
-import com.ole.epustakalaya.models.RecycleItem;
+import com.ole.epustakalaya.models.AudioDetails;
 import com.ole.epustakalaya.retrofit_api.PustakalayaApiInterface;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -41,7 +40,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
     private LinearLayoutManager mLayoutManager;
     private PustakalayaApiInterface APIInterface;
     private AudioBookAllAdapter mAdapter;
-    private List<RecycleItem> result;
+    private List<AudioDetails> result;
     private GridLayoutManager lLayout;
 
     @Override
@@ -50,27 +49,6 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
 
 
     }
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//        setTitle(null);
-//
-//        Toolbar topToolBar = (Toolbar)findViewById(R.id.toolbar);
-//        setSupportActionBar(topToolBar);
-//        topToolBar.setLogo(R.drawable.logo);
-//        topToolBar.setLogoDescription(getResources().getString(R.string.logo_desc));
-//
-//        List<ItemObject> rowListItem = getAllItemList();
-//        lLayout = new GridLayoutManager(MainActivity.this, 4);
-//
-//        RecyclerView rView = (RecyclerView)findViewById(R.id.recycler_view);
-//        rView.setHasFixedSize(true);
-//        rView.setLayoutManager(lLayout);
-//
-//        RecyclerViewAdapter rcAdapter = new RecyclerViewAdapter(MainActivity.this, rowListItem);
-//        rView.setAdapter(rcAdapter);
-//    }
 
 
 
@@ -166,7 +144,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
 
         result = new ArrayList<>();
         for (int i = 0; i < t.body().getContent().size(); i++) {
-            RecycleItem ci = new RecycleItem();
+            AudioDetails ci = new AudioDetails();
             ci.title = t.body().getContent().get(i).getTitle();
             ci.image=t.body().getContent().get(i).getCover();
             ci.Author=t.body().getContent().get(i).getAuthor();
