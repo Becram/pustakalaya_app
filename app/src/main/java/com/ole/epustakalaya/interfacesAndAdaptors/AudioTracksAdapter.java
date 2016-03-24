@@ -20,11 +20,13 @@ import android.widget.Toast;
 import com.ole.epustakalaya.AudioTracksPlayFragment;
 import com.ole.epustakalaya.MainActivity;
 import com.ole.epustakalaya.R;
+import com.ole.epustakalaya.helper.MyAudioBooksDB;
 import com.ole.epustakalaya.helper.MyBooksDB;
 import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioAllViewHolder;
 import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioTracksViewHolder;
 import com.ole.epustakalaya.interfacesAndAdaptors.OnLoadMoreListener;
 
+import com.ole.epustakalaya.models.AudioBook;
 import com.ole.epustakalaya.models.Book;
 import com.ole.epustakalaya.models.Track;
 
@@ -48,6 +50,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
     private int lastVisibleItem, totalItemCount;
     private int visibleThreshold = 2;
     private DownloadManager downloadmanager;
+    private AudioBook aBook;
 
     private boolean loading;
     private OnLoadMoreListener onLoadMoreListener;
@@ -167,7 +170,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 //                    File mydownload = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+ "/AudioBooks");
 //                    request.setDestinationInExternalPublicDir(mydownload.getAbsolutePath(),mTrack.getTitle());
 
-
+                        dbAudioBookWrite();
                         downloadmanager.enqueue(request);
 
 
@@ -204,10 +207,11 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
         String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
         return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
-    public void dbWrite(boolean isDownloading){
-        MyBooksDB db = new MyBooksDB(myContext);
-        book.isDownloading = isDownloading;
-        db.addBook(book);
+    public void dbAudioBookWrite(){
+        MyAudioBooksDB db = new MyAudioBooksDB(myContext);
+        Log.d("DB",aBook.author);
+//        book.isDownloading = isDownloading;
+        db.addAudioBook(aBook);
     }
 
     public static String getConvertedTime(double value) {
