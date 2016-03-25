@@ -209,9 +209,9 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
     }
     public void dbAudioBookWrite(){
         MyAudioBooksDB db = new MyAudioBooksDB(myContext);
-        Log.d("DB",aBook.author);
+        Log.d("DB","witing db");
 //        book.isDownloading = isDownloading;
-        db.addAudioBook(aBook);
+        db.addAudioBook("123","testTile","ramesh","cover","url");
     }
 
     public static String getConvertedTime(double value) {

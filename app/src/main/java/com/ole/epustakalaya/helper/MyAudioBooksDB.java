@@ -18,16 +18,17 @@ import java.util.List;
  */
 public class MyAudioBooksDB extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "epustakalayadb";
-    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "epustakalayaaudiodb";
+    public static final int DATABASE_VERSION = 8;
     public static final String TABLE_NAME = "myAudioBooks";
     public static final String UID = "_id";
-    public static final String PID = "pid";
-    public static final String aBookName = "title";
+    public static final String aPID = "pid";
+    public static final String aTitle = "title";
     public static final String aAuthor = "author";
 
     public static final String aImage = "coverImageURL";
     public static final String aViews= "views";
+    public static final String aTrackURL= "trackURL";
 
     private Context context;
 
@@ -40,14 +41,15 @@ public class MyAudioBooksDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_MYAUDIOBOOK_TABLE = "CREATE TABLE "+TABLE_NAME+"("
                 +UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                +PID+" VARCHAR(255), "
-                +aBookName+" VARCHAR(255), "
-                +aAuthor+" VARCHAR(255), "
+                +aPID+" VARCHAR(255), "
+                +aTitle+" VARCHAR(255), "
+                +aAuthor+" VARCHAR(255),"
                 +aImage+" VARCHAR(50), "
-                +aViews+" INTEGER"
+                +aTrackURL+" VARCHAR(50) "
                 +")";
         db.execSQL(CREATE_MYAUDIOBOOK_TABLE);
 //        Toast.makeText(context,"on create",Toast.LENGTH_SHORT).show();
+        Log.d("db","creating atable");
     }
 
     @Override
@@ -58,21 +60,21 @@ public class MyAudioBooksDB extends SQLiteOpenHelper {
     }
 
     //add book
-    public long addAudioBook(AudioBook book){
+    public long addAudioBook(String mPid,String mTitle,String mAuthor,String mCover,String mtrack){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, PID+" =?",new String[]{String.valueOf(book.id)});
+//        db.delete(TABLE_NAME, PID+" =?",new String[]{String.valueOf(book.id)});
         long success = 0;
 
-        ContentValues values = new ContentValues();
-        values.put(PID,book.id);
-        values.put(aBookName,book.title);
-        values.put(aAuthor,book.author);
-        values.put(aImage,book.coverImageURL);
-        values.put(aViews,book.views);
+        ContentValues avalues = new ContentValues();
+        avalues.put(aPID,mPid);
+        avalues.put(aTitle,mTitle);
+        avalues.put(aAuthor,mAuthor);
+        avalues.put(aImage,mCover);
+        avalues.put(aTrackURL,mtrack);
 
         db.beginTransaction();
         try {
-            success = db.insert(TABLE_NAME,null,values);
+            success = db.insert(TABLE_NAME,null,avalues);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -86,7 +88,7 @@ public class MyAudioBooksDB extends SQLiteOpenHelper {
     public AudioBook getBook(String pid){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_NAME,new String[]{UID,aBookName,aAuthor,aImage,aViews}, PID+"=?",
+        Cursor cursor = db.query(TABLE_NAME,new String[]{UID,aTitle,aAuthor,aImage,aViews}, aPID+"=?",
                 new String[]{String.valueOf(pid)},null,null,null,null);
         if (cursor !=null && cursor.getCount()>0) {
             cursor.moveToFirst();
@@ -149,7 +151,7 @@ public class MyAudioBooksDB extends SQLiteOpenHelper {
     //Delete book from this table when download complets successfully
     public void deleteBook(Book book){
         SQLiteDatabase database = this.getWritableDatabase();
-        database.delete(TABLE_NAME, aBookName +" =?",new String[]{String.valueOf(book.pdfFileURL)});
+        database.delete(TABLE_NAME, aTitle +" =?",new String[]{String.valueOf(book.pdfFileURL)});
         database.close();
     }
 }
