@@ -27,6 +27,7 @@ import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioTracksViewHolder;
 import com.ole.epustakalaya.interfacesAndAdaptors.OnLoadMoreListener;
 
 import com.ole.epustakalaya.models.AudioBook;
+import com.ole.epustakalaya.models.AudioBookDB;
 import com.ole.epustakalaya.models.Book;
 import com.ole.epustakalaya.models.Track;
 
@@ -56,7 +57,9 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
     private OnLoadMoreListener onLoadMoreListener;
 
     private Context mContext;
+
     //    private ArrayList<String> mDataset;
+
     private List<Track> mTrackList;
     private Typeface face;
     private long myDownloadReference;
@@ -128,8 +131,12 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
             ((MyAudioTracksViewHolder) HOLDER).getFileSize().setText(humanReadableByteCount(mTrack.track_size, true));
             ((MyAudioTracksViewHolder) HOLDER).getDuration().setText(getConvertedTime(mTrack.track_duration));
+//            dbAudioBookWrite();
+//            getBooks("3");
         //    ((MyAudioTracksViewHolder) HOLDER).getTextViewAudioTitle().setTypeface(face);f
 
+
+            getAllAUdio();
             Log.d("regex",StringRegx(AudioTracksPlayFragment.book_title));
             ((MyAudioTracksViewHolder) HOLDER).getDownloader().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -170,7 +177,8 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 //                    File mydownload = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+ "/AudioBooks");
 //                    request.setDestinationInExternalPublicDir(mydownload.getAbsolutePath(),mTrack.getTitle());
 
-                        dbAudioBookWrite();
+                        dbAudioBookWrite(AudioTracksPlayFragment.book_id,AudioTracksPlayFragment.book_title,AudioTracksPlayFragment.book_author,AudioTracksPlayFragment.book_image,mTrack.getTrackURL());
+                    getBooks(AudioTracksPlayFragment.book_id);
                         downloadmanager.enqueue(request);
 
 
@@ -195,7 +203,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
         String regexedString=s.replaceAll("[-+.^:,'()]", " ").trim();
 
-        return regexedString.replaceAll("\\s","");
+        return regexedString.replaceAll("\\s", "");
 
 
     }
@@ -207,11 +215,29 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
         String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
         return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
-    public void dbAudioBookWrite(){
+    public void dbAudioBookWrite(String pid,String filename,String author,String cover,String URL){
         MyAudioBooksDB db = new MyAudioBooksDB(myContext);
-        Log.d("DB","witing db");
+        Log.d("DB", "witing db");
 //        book.isDownloading = isDownloading;
-        db.addAudioBook("123","testTile","ramesh","cover","url");
+        db.addAudioBook(pid,filename,author,cover,URL);
+
+    }
+    public void getAllAUdio(){
+        MyAudioBooksDB db=new MyAudioBooksDB(myContext);
+
+        List<AudioBookDB> contacts = db.getAllContacts();
+        for (AudioBookDB cn : contacts) {
+            String log = "PID: " + cn.getPID() + " ,BookTitle: " + cn.getTitle() + " ,Author: " + cn.getAuthor()+ " ,Image: " + cn.getCover()+ " ,URL: " + cn.getURL();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
+    }
+    public void getBooks(String pid){
+
+
+        MyAudioBooksDB db=new MyAudioBooksDB(myContext);
+        db.getBook(pid);
+        Log.d("get Book",db.getBook(pid).getCover());
     }
 
     public static String getConvertedTime(double value) {

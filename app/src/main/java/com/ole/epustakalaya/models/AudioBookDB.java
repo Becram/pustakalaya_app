@@ -14,4 +14,17 @@ public class AudioBookDB {
 
     public int views;
 
+    public String getPID(){ return pid; }
+    public String getTitle(){ return title; }
+    public String getAuthor(){ return author; }
+    public String getCover(){ return coverImageURL; }
+    public String getURL(){ return trackURL; }
+
+
+    public void setPID(String pid){this.pid=pid;}
+    public void setTitle(String title){this.title=title;}
+    public void setAuthor(String author){this.author=author;}
+    public void setCover(String coverImageURL){this.coverImageURL=coverImageURL;}
+    public void setURL(String trackURL){this.trackURL=trackURL;}
+
 }

@@ -72,9 +72,12 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     private static int a=0;
     private BroadcastReceiver downloadCompleteBroadcastReceiver;
     private Context context;
-    public static String book_title;
+
     private TelephonyManager telManager;
     public static String book_id;
+    public static String book_title;
+    public static String book_author;
+    public static String book_image;
 //    private Context context;
 
 
@@ -198,6 +201,10 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         Call<ModelAudioBookDetails> call = APIInterface.getAudioBooksDetails(AudioAllAMainDetails.get_bookid);
         book_title=AudioAllAMainDetails.get_booktitle;
         book_id=AudioAllAMainDetails.get_bookid;
+        book_author=AudioAllAMainDetails.get_author;
+        book_image=AudioAllAMainDetails.get_image;
+//        book_id=AudioAllAMainDetails.get_bookid;
+//        book_id=AudioAllAMainDetails.get_bookid;
 
 
         call.enqueue(this);

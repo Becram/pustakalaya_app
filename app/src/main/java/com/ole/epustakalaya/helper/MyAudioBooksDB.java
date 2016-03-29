@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.ole.epustakalaya.models.AudioBook;
+import com.ole.epustakalaya.models.AudioBookDB;
 import com.ole.epustakalaya.models.Book;
 
 import java.util.ArrayList;
@@ -85,20 +86,20 @@ public class MyAudioBooksDB extends SQLiteOpenHelper {
     }
 
     //get book
-    public AudioBook getBook(String pid){
+    public AudioBookDB getBook(String pid){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_NAME,new String[]{UID,aTitle,aAuthor,aImage,aViews}, aPID+"=?",
+        Cursor cursor = db.query(TABLE_NAME,new String[]{UID,aTitle,aAuthor,aImage,aTrackURL}, aPID+"=?",
                 new String[]{String.valueOf(pid)},null,null,null,null);
         if (cursor !=null && cursor.getCount()>0) {
             cursor.moveToFirst();
 
-            AudioBook abook = new AudioBook();
-            abook.id = pid;
+            AudioBookDB abook = new AudioBookDB();
+            abook.pid = pid;
             abook.title = cursor.getString(1);
             abook.author = cursor.getString(2);
             abook.coverImageURL = cursor.getString(3);
-            abook.views = cursor.getInt(4);
+            abook.trackURL = cursor.getString(4);
             cursor.close();
             db.close();
 
@@ -108,32 +109,65 @@ public class MyAudioBooksDB extends SQLiteOpenHelper {
         db.close();
         return null;
     }
+    public List<AudioBookDB> getAllContacts() {
+        List<AudioBookDB> DBList = new ArrayList<AudioBookDB>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME;
 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-    //getting all books
-    public Book[] getAllList(){
-
-        List<Book> bookList = new ArrayList<Book>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT * FROM "+TABLE_NAME;
-        Cursor cursor = db.rawQuery(selectQuery,null);
-        if (cursor.moveToFirst()){
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
             do {
-
-                Book book = new Book();
-                book.pid = cursor.getString(1);
-                book.pdfFileURL = cursor.getString(2);
-                book.coverImageURL = cursor.getString(3);
-                book.fileSize = cursor.getString(4);
-
-                Log.d("book", "***" + cursor.getString(0) + " *** " + book.pid + "***" + book.pdfFileURL + "***" + book.coverImageURL);
-                bookList.add(book);
+                AudioBookDB contact = new AudioBookDB();
+                contact.setPID(cursor.getString(1));
+                contact.setTitle(cursor.getString(2));
+                contact.setAuthor(cursor.getString(3));
+                contact.setCover(cursor.getString(4));
+                contact.setURL(cursor.getString(5));
+                // Adding contact to list
+                DBList.add(contact);
             } while (cursor.moveToNext());
-            cursor.close();
         }
-        db.close();
-        return bookList.toArray(new Book[bookList.size()]);
+
+        // return contact list
+        return DBList;
     }
+
+//    //getting all books
+//    public List<AudioBookDB> getAllList(){
+//
+//        List<AudioBookDB> bookList = new ArrayList<AudioBookDB>();
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        String selectQuery = "SELECT * FROM "+TABLE_NAME;
+//        AudioBookDB book = new AudioBookDB();
+//        Cursor cursor = db.rawQuery(selectQuery,null);
+//        if (cursor.moveToFirst()){
+//
+//            do {
+//
+//
+//                book.pid = cursor.getString(1);
+//                book.title = cursor.getString(2);
+//                book.author = cursor.getString(3);
+//                book.coverImageURL = cursor.getString(4);
+//                book.views = cursor.getInt(5);
+//
+//                Log.d("book", "***" + cursor.getString(0) + " *** " + book.pid + "***" + book.title + "***" + book.coverImageURL);
+//
+////                bookList.add(book);
+//
+//            } while (cursor.moveToNext());
+//
+//            cursor.close();
+//
+//        }
+//        db.close();
+//        return book;
+////        return bookList.toArray(new AudioBookDB[bookList.size()]);
+//
+//    }
 
     //getting all count
     public int getCountMyBooks(){
@@ -150,8 +184,10 @@ public class MyAudioBooksDB extends SQLiteOpenHelper {
 
     //Delete book from this table when download complets successfully
     public void deleteBook(Book book){
+
         SQLiteDatabase database = this.getWritableDatabase();
         database.delete(TABLE_NAME, aTitle +" =?",new String[]{String.valueOf(book.pdfFileURL)});
         database.close();
+
     }
 }
