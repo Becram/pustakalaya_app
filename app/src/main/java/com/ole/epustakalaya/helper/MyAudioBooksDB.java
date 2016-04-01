@@ -89,17 +89,17 @@ public class MyAudioBooksDB extends SQLiteOpenHelper {
     public AudioBookDB getBook(String pid){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_NAME,new String[]{UID,aTitle,aAuthor,aImage,aTrackURL}, aPID+"=?",
+        Cursor cursor = db.query(TABLE_NAME,new String[]{UID,aPID,aTitle,aAuthor,aImage,aTrackURL}, aPID+"=?",
                 new String[]{String.valueOf(pid)},null,null,null,null);
         if (cursor !=null && cursor.getCount()>0) {
             cursor.moveToFirst();
 
             AudioBookDB abook = new AudioBookDB();
-            abook.pid = pid;
-            abook.title = cursor.getString(1);
-            abook.author = cursor.getString(2);
-            abook.coverImageURL = cursor.getString(3);
-            abook.trackURL = cursor.getString(4);
+            abook.setPID(pid);
+            abook.setTitle(cursor.getString(2));
+            abook.setAuthor(cursor.getString(3));
+            abook.setCover(cursor.getString(4));
+            abook.setURL(cursor.getString(5));
             cursor.close();
             db.close();
 
@@ -128,6 +128,7 @@ public class MyAudioBooksDB extends SQLiteOpenHelper {
                 contact.setURL(cursor.getString(5));
                 // Adding contact to list
                 DBList.add(contact);
+
             } while (cursor.moveToNext());
         }
 
@@ -181,6 +182,44 @@ public class MyAudioBooksDB extends SQLiteOpenHelper {
         db.close();
         return count;
     }
+
+    /* Method for fetching record from Database */
+    public ArrayList<AudioBookDB> getAllDownloadABooks() {
+        String query = "SELECT * FROM " + TABLE_NAME;
+        ArrayList<AudioBookDB> my_aDownloads = new ArrayList<AudioBookDB>();
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor c = database.rawQuery(query, null);
+        if (c != null) {
+            while (c.moveToNext()) {
+//                int code = c.getInt(c.getColumnIndex());
+                String pid = c.getString(c.getColumnIndex(aPID));
+                String title = c.getString(c.getColumnIndex(aTitle));
+                String author = c.getString(c.getColumnIndex(aAuthor));
+                String cover = c.getString(c.getColumnIndex(aImage));
+                String url = c.getString(c.getColumnIndex(aTrackURL));
+
+                AudioBookDB ABDB = new AudioBookDB();
+                ABDB.setPID(pid);
+                ABDB.setTitle(title);
+                ABDB.setAuthor(author);
+                ABDB.setCover(cover);
+                ABDB.setURL(url);
+
+                Log.v("DBHelper: ", "PID: " + pid);
+                Log.v("DBHelper: ", "Title: " + title);
+                Log.v("DBHelper: ", "Author: " + author);
+                Log.v("DBHelper: ", "Cover: " + cover);
+                Log.v("DBHelper: ", "Url: " + url);
+
+                my_aDownloads.add(ABDB);
+            }
+        }
+
+        return my_aDownloads;
+
+    }
+
+
 
     //Delete book from this table when download complets successfully
     public void deleteBook(Book book){

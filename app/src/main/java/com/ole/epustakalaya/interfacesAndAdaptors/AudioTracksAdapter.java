@@ -224,12 +224,15 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
     }
     public void getAllAUdio(){
         MyAudioBooksDB db=new MyAudioBooksDB(myContext);
+        AudioBook AB=new AudioBook();
 
         List<AudioBookDB> contacts = db.getAllContacts();
         for (AudioBookDB cn : contacts) {
+
             String log = "PID: " + cn.getPID() + " ,BookTitle: " + cn.getTitle() + " ,Author: " + cn.getAuthor()+ " ,Image: " + cn.getCover()+ " ,URL: " + cn.getURL();
             // Writing Contacts to log
             Log.d("Name: ", log);
+            
         }
     }
     public void getBooks(String pid){
@@ -246,8 +249,11 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
         long min = (long) (value / 60);
         long second = (long) (value % 60);
         if (min < 60){
+
             output = min + ":" + (second > 10 ? "" : "0") + second;
+
         }else{
+
             long hr=min/60;
             output=hr+":"+(min-hr*60) + ":" + (second > 10 ? "" : "0") + second;
 

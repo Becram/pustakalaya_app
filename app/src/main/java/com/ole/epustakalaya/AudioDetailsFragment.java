@@ -54,7 +54,7 @@ public class AudioDetailsFragment extends Fragment implements Callback<ModelAudi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.tab_audio_details, container, false);
+        View v= inflater.inflate(R.layout.saudio_detail_fragment, container, false);
         cover= (ImageView) v.findViewById(R.id.image_cover);
         text_author= (TextView) v.findViewById(R.id.textView_author);
         text_language= (TextView) v.findViewById(R.id.textView_lanuage);
@@ -114,18 +114,18 @@ public class AudioDetailsFragment extends Fragment implements Callback<ModelAudi
                 progress_detail.setVisibility(View.GONE);
                 Picasso.with(getContext()).load(BASE_URL + response.body().getContent().getImage())
                         .into(cover);
-                text_title.setText("Title:" + response.body().getContent().getTitle());
+                text_title.setText(response.body().getContent().getTitle());
             //    text_description.setTypeface(face);
 
 
-                text_author.setText("Author:" + response.body().getContent().getAuthor());
-                text_language.setText("Language:" + response.body().getContent().getLang());
-                text_views.setText("Views:" + response.body().getContent().getViews());
-                text_publisher.setText("Publisher:" + response.body().getContent().getPublisher());
-                text_genre.setText("Genre:" + response.body().getContent().getGenre());
-                text_reader.setText("Reader:" + response.body().getContent().getReader());
-                text_description.setText("Description:" + response.body().getContent().getDesc());
-                text_chap_count.setText("Chapter Count:"+String.valueOf(response.body().getContent().getChapters().size()));
+                text_author.setText( response.body().getContent().getAuthor());
+                text_language.setText(response.body().getContent().getLang());
+                text_views.setText(response.body().getContent().getViews());
+                text_publisher.setText(response.body().getContent().getPublisher());
+                text_genre.setText(response.body().getContent().getGenre());
+                text_reader.setText( response.body().getContent().getReader());
+                text_description.setText(response.body().getContent().getDesc());
+                text_chap_count.setText(String.valueOf(response.body().getContent().getChapters().size()));
                 Log.d("Title:" , response.body().getContent().getTitle());
                 Log.d("Author:",response.body().getContent().getAuthor());
                 Log.d("Language:", response.body().getContent().getLang());

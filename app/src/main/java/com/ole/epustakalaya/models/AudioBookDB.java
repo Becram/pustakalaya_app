@@ -25,6 +25,6 @@ public class AudioBookDB {
     public void setTitle(String title){this.title=title;}
     public void setAuthor(String author){this.author=author;}
     public void setCover(String coverImageURL){this.coverImageURL=coverImageURL;}
-    public void setURL(String trackURL){this.trackURL=trackURL;}
+    public void setURL(String trackURL){ this.trackURL=trackURL;}
 
 }

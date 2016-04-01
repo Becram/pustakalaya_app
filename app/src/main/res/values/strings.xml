@@ -78,4 +78,30 @@
     <string name="playing">playing</string>
     <string name="permission_storage">permissionStorage</string>
 
+
+<!-- for audio details -->
+    <string name="Author">Author</string>
+    <string name="Language">Language</string>
+    <string name="Views">Views</string>
+    <string name="Reader">Reader</string>
+    <string name="Publisher">Publisher</string>
+    <string name="Genre">Genre</string>
+    <string name="Chaptercount">Chaptercount</string>
+    <string name="summary">Summary</string>
+    <string name="thumbnail">icon for author</string>
+    <string name="summery_values">
+        buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi
+
+
+    </string>
+    <string name="title">title name</string>
+    <string name="auther_value">ganeshgeeeeeeeeeeeeeee</string>
+    <string name="language_values">englishhhhhhhhhhhh</string>
+    <string name="views_values">85655</string>
+    <string name="reader_values">525</string>
+    <string name="publisher_values">olenepallllllllllllllllllllllll</string>
+    <string name="genre_values">rockkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</string>
+    <string name="chaptercount_values">6444</string>
+
+
 </resources>

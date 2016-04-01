@@ -1,0 +1,43 @@
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="#fff">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="reading books"/>
+
+    <FrameLayout
+        android:id="@+id/readingbooks_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_margin="20px"
+
+        android:background="#699">
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="audio books"/>
+
+    <FrameLayout
+        android:id="@+id/audiobooks_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="20px"
+
+        android:layout_below="@+id/message_fragment"
+        android:background="#123" >
+    </FrameLayout>
+
+</LinearLayout>

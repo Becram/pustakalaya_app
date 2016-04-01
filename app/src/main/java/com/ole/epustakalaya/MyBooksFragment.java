@@ -53,18 +53,21 @@ public class MyBooksFragment extends Fragment implements View.OnCreateContextMen
         t.send(new HitBuilders.ScreenViewBuilder().build());
 
         View rootView = inflater.inflate(R.layout.editors_pick, container, false);
-        gridView = (GridView) rootView.findViewById(R.id.editors_pick_gridview);
+        gridView =      (GridView) rootView.findViewById(R.id.editors_pick_gridview);
         noBooksNotice = (TextView) rootView.findViewById(R.id.tvNoBooksNotice);
 //        gridView.setBackgroundColor(Color.parseColor("#e0f2f1"));
-        this.context = getActivity().getApplicationContext();
+        this.context =  getActivity().getApplicationContext();
 
         myBooks = Utility.getAllDownloadedBook(getActivity().getApplicationContext());
         //may need to filter the still downloading books
         myBooks = cleanBooksArray(myBooks);
+
         if(myBooks ==null || myBooks.length == 0){
+
             gridView.setVisibility(View.GONE);
             noBooksNotice.setVisibility(View.VISIBLE);
             return rootView;
+
         }
         myBookAdapter = new MyBooksGridAdapter(getActivity().getApplicationContext(),myBooks);
         gridView.setAdapter(myBookAdapter);

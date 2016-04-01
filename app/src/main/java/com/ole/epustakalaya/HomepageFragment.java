@@ -142,7 +142,8 @@ public class HomepageFragment extends Fragment /*implements ActionBar.TabListene
         adapter.addFragment(new EditorsPicksFragment(), "Editor's Pick");
         adapter.addFragment(new MyAudioBooksFragment(), "Audio Books");
         adapter.addFragment(new LatestBooksFragment(), "Latest Books");
-        adapter.addFragment(new MyBooksFragment(), "My Books");
+        adapter.addFragment(new MyDownloads(), "My Books");
+//        adapter.addFragment(new MyBooksFragment(), "My Books");
         viewPager.setAdapter(adapter);
     }
 
