@@ -54,8 +54,6 @@ public class MyAudioDownnloads extends Fragment {
 
             }
         });
-
-
-        return v;
+         return v;
     }
 }
