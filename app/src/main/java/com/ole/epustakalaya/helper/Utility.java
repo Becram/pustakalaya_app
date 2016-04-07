@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ole.epustakalaya.models.AudioBookDB;
 import com.ole.epustakalaya.models.Book;
 
 import java.io.File;
@@ -37,6 +38,7 @@ import java.util.List;
 public class Utility {
     public static String NO_CONNECTION_MSG = "Seems like you are not connected to network. Check internet settings";
     public static String pdfDirectory = Environment.getExternalStorageDirectory()+"/Epustakalaya/pdf/";
+    private  Context myContext;
 
     public static void crashMe(){
         Book book=null;
@@ -279,6 +281,21 @@ public class Utility {
             }
         }
         return bookList.toArray(new Book[bookList.size()]);
+    }
+
+    public AudioBookDB[] getAllAudioDownloads(){
+
+        MyAudioBooksDB db=new MyAudioBooksDB(myContext);
+
+        List<AudioBookDB> contacts = db.getAllContacts();
+        for (AudioBookDB cn : contacts) {
+            String log = "PID: " + cn.getPID() + " ,BookTitle: " + cn.getTitle() + " ,Author: " + cn.getAuthor()+ " ,Image: " + cn.getCover()+ " ,URL: " + cn.getURL();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
+
+     return null;
+
     }
 
 }
