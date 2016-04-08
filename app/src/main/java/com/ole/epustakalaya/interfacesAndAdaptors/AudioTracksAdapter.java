@@ -27,6 +27,7 @@ import com.ole.epustakalaya.MainActivity;
 import com.ole.epustakalaya.R;
 import com.ole.epustakalaya.helper.MyAudioBooksDB;
 import com.ole.epustakalaya.helper.MyBooksDB;
+import com.ole.epustakalaya.helper.Utility;
 import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioAllViewHolder;
 import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioTracksViewHolder;
 import com.ole.epustakalaya.interfacesAndAdaptors.OnLoadMoreListener;
@@ -146,7 +147,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
 
             getAllAUdio();
-            getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
+            Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
                     + "/Epustakalaya/audio");
             Log.d("regex", StringRegx(AudioTracksPlayFragment.book_title));
 
@@ -250,22 +251,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
     }
 
-    public void getAudioFilesFromDirs(String Dir){
-        ArrayList<String> PIDS = new ArrayList<String>();
 
-        Log.d("Files", "Path: " +Dir);
-        File f = new File(Dir);
-        File file[] = f.listFiles();
-        Log.d("Files", "Size: "+ file.length);
-        for (int i=0; i < file.length; i++)
-        {    String s=file[i].getName();
-
-            Log.d("Files", "FileName:" + s);
-            String upToNCharacters = s.substring(0, Math.min(s.length(), 3));
-            PIDS.add(upToNCharacters);
-        }
-        Log.d("PIDS",String.valueOf(PIDS));
-    }
 
 
     public static String humanReadableByteCount(long bytes, boolean si) {
@@ -279,7 +265,8 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
         MyAudioBooksDB db = new MyAudioBooksDB(myContext);
         Log.d("DB", "witing db");
 //        book.isDownloading = isDownloading;
-        db.addAudioBook(pid,filename,author,cover,URL);
+        db.addAudioBook(pid, filename, author, cover, URL);
+
 
     }
 
@@ -332,6 +319,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
             String log = "PID: " + cn.getPID() + " ,BookTitle: " + cn.getTitle() + " ,Author: " + cn.getAuthor()+ " ,Image: " + cn.getCover()+ " ,URL: " + cn.getURL();
             // Writing Contacts to log
             Log.d("Name: ", log);
+            Log.d("geting count ", String.valueOf(db.getCountMyBooks()));
             
         }
     }

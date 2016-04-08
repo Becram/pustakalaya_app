@@ -45,7 +45,26 @@ public class Utility {
         Log.v("LEts Crash","Crash Now "+book.publisher);
     }
 
+    public static void getAudioFilesFromDirs(String Dir){
+        ArrayList<String> PIDS = new ArrayList<String>();
 
+        Log.d("Files", "Path: " + Dir);
+        File f = new File(Dir);
+        File file[] = f.listFiles();
+        if(file != null){
+            Log.d("Files", "Size: "+ file.length);
+            for (int i=0; i < file.length; i++)
+            {    String s=file[i].getName();
+
+                Log.d("Files", "FileName:" + s);
+                String upToNCharacters = s.substring(0, Math.min(s.length(), 3));
+                PIDS.add(upToNCharacters);
+            }
+            Log.d("PIDS",String.valueOf(PIDS));
+
+        }
+
+    }
 
     public static void giveNoConnectionMessage(final Context context){
          Toast.makeText(context,NO_CONNECTION_MSG, Toast.LENGTH_SHORT).show();
