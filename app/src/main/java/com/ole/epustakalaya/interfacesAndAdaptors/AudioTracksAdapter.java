@@ -1,6 +1,7 @@
 package com.ole.epustakalaya.interfacesAndAdaptors;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -36,6 +37,7 @@ import com.ole.epustakalaya.models.Book;
 import com.ole.epustakalaya.models.Track;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -144,23 +146,39 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
 
             getAllAUdio();
-            Log.d("regex",StringRegx(AudioTracksPlayFragment.book_title));
+            getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
+                    + "/Epustakalaya/audio");
+            Log.d("regex", StringRegx(AudioTracksPlayFragment.book_title));
+
             ((MyAudioTracksViewHolder) HOLDER).getDownloader().setOnClickListener(new View.OnClickListener() {
                 
+                @TargetApi(Build.VERSION_CODES.HONEYCOMB)
                 @Override
                 public void onClick(View v) {
 
 
 
+                    File direct = new File(Environment.getExternalStorageDirectory()
+                                + "/Epustakalaya/audio");
+
+                        if (!direct.exists()) {
+                            direct.mkdirs();
+                        }
+
+
+
+
                     dm = (DownloadManager) myContext.getSystemService(myContext.DOWNLOAD_SERVICE);
                     DownloadManager.Request request = new DownloadManager.Request(
-                            Uri.parse("http://www.vogella.de/img/lars/LarsVogelArticle7.png"));
+                            Uri.parse(BASE_URL + mTrack.getTrackURL()));
                     request.setAllowedNetworkTypes(
                                 DownloadManager.Request.NETWORK_WIFI
                                         | DownloadManager.Request.NETWORK_MOBILE)
                                 .setAllowedOverRoaming(false).setTitle(mTrack.getTitle())
                                 .setDescription("Downloading ...")
-                                .setDestinationInExternalPublicDir("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
+                                .setTitle(mTrack.getTitle())
+                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                    .setDestinationInExternalPublicDir("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
 //                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
                     myContext.registerReceiver(receiver,intentFilter);
                     enqueue = dm.enqueue(request);
@@ -232,6 +250,24 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
     }
 
+    public void getAudioFilesFromDirs(String Dir){
+        ArrayList<String> PIDS = new ArrayList<String>();
+
+        Log.d("Files", "Path: " +Dir);
+        File f = new File(Dir);
+        File file[] = f.listFiles();
+        Log.d("Files", "Size: "+ file.length);
+        for (int i=0; i < file.length; i++)
+        {    String s=file[i].getName();
+
+            Log.d("Files", "FileName:" + s);
+            String upToNCharacters = s.substring(0, Math.min(s.length(), 3));
+            PIDS.add(upToNCharacters);
+        }
+        Log.d("PIDS",String.valueOf(PIDS));
+    }
+
+
     public static String humanReadableByteCount(long bytes, boolean si) {
         int unit = si ? 1000 : 1024;
         if (bytes < unit) return bytes + " B";
@@ -268,6 +304,9 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
                             .getInt(columnIndex)) {
 
                         Log.d("complete",c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME)));
+                        context.unregisterReceiver(receiver);
+                        dbAudioBookWrite(AudioTracksPlayFragment.book_id, AudioTracksPlayFragment.book_title, AudioTracksPlayFragment.book_author, AudioTracksPlayFragment.book_image, c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME)));
+
 
 //                        ImageView view = (ImageView) findViewById(R.id.imageView1);
 //                        String uriString = c
