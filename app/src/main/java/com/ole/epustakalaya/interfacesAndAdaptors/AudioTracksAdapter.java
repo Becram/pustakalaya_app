@@ -27,6 +27,7 @@ import com.ole.epustakalaya.MainActivity;
 import com.ole.epustakalaya.R;
 import com.ole.epustakalaya.helper.MyAudioBooksDB;
 import com.ole.epustakalaya.helper.MyBooksDB;
+import com.ole.epustakalaya.helper.ServerSideHelper;
 import com.ole.epustakalaya.helper.Utility;
 import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioAllViewHolder;
 import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioTracksViewHolder;
@@ -40,6 +41,7 @@ import com.ole.epustakalaya.models.Track;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by bikram on 3/10/16.
@@ -74,6 +76,8 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
     private long enqueue;
     private DownloadManager dm;
     IntentFilter intentFilter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+    public String audioBookDirectory="directory";
+
 
 
     public AudioTracksAdapter(List<Track> BookList, RecyclerView recyclerV, Context m) {
@@ -141,14 +145,12 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
             ((MyAudioTracksViewHolder) HOLDER).getFileSize().setText(humanReadableByteCount(mTrack.track_size, true));
             ((MyAudioTracksViewHolder) HOLDER).getDuration().setText(getConvertedTime(mTrack.track_duration));
-//            dbAudioBookWrite();
-//            getBooks("3");
-        //    ((MyAudioTracksViewHolder) HOLDER).getTextViewAudioTitle().setTypeface(face);f
+
 
 
             getAllAUdio();
-            Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
-                    + "/Epustakalaya/audio");
+//            Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
+//                    + "/Epustakalaya/audio");
             Log.d("regex", StringRegx(AudioTracksPlayFragment.book_title));
 
             ((MyAudioTracksViewHolder) HOLDER).getDownloader().setOnClickListener(new View.OnClickListener() {
@@ -175,7 +177,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
                     request.setAllowedNetworkTypes(
                                 DownloadManager.Request.NETWORK_WIFI
                                         | DownloadManager.Request.NETWORK_MOBILE)
-                                .setAllowedOverRoaming(false).setTitle(mTrack.getTitle())
+                                .setAllowedOverRoaming(true).setTitle(mTrack.getTitle())
                                 .setDescription("Downloading ...")
                                 .setTitle(mTrack.getTitle())
                             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
@@ -183,6 +185,23 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 //                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
                     myContext.registerReceiver(receiver,intentFilter);
                     enqueue = dm.enqueue(request);
+
+//                    File file = new File(Environment.getExternalStorageDirectory()
+//                            + "/Epustakalaya/audio"+ AudioTracksPlayFragment.book_image);
+//                    if(!file.exists()) {
+//                        Log.d("downloading cover","1st time");
+//                        DownloadManager.Request requestCover = new DownloadManager.Request(
+//                                Uri.parse(BASE_URL + AudioTracksPlayFragment.book_image));
+//
+//                        requestCover.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
+//                                .setDestinationInExternalPublicDir("/Epustakalaya/audio/", AudioTracksPlayFragment.book_image);
+////                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
+//                        myContext.registerReceiver(receiver, intentFilter);
+//                        enqueue = dm.enqueue(requestCover);
+//
+//                    }
+
+
 
 //                    if (Build.VERSION.SDK_INT >= 23) {
 //
@@ -250,6 +269,9 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
 
     }
+
+
+
 
 
 

@@ -3,6 +3,7 @@ package com.ole.epustakalaya;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,9 +15,11 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.ole.epustakalaya.helper.MyAudioBooksDB;
+import com.ole.epustakalaya.helper.Utility;
 import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioDownloadAdapter;
 import com.ole.epustakalaya.models.AudioBookDB;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -36,7 +39,21 @@ public class MyAudioDownnloads extends Fragment {
         gridView =      (GridView) v.findViewById(R.id.editors_pick_gridview);
         MyAudioBooksDB databaseHelper = new MyAudioBooksDB(getContext());
         bList = new ArrayList<AudioBookDB>();
-        bList = databaseHelper.getAllDownloadABooks();
+//        for (int i=0;i<Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
+//                + "/Epustakalaya/audio").size();i++){
+//dio").get(i));
+//        }
+        ArrayList myArray=Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
+                + "/Epustakalaya/audio");
+//        Log.d("myloop", databaseHelper.getAudioFilesFromDirsComparewithSqlite(Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
+//                + "/Epustakalaya/audio")).get(0).getTitle());
+
+//            Log.d("looper",Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
+//                    + "/Epustakalaya/au
+        bList.clear();
+
+        bList = databaseHelper.getAudioFilesFromDirsComparewithSqlite(Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
+                + "/Epustakalaya/audio"));
         MyAudioDownloadAdapter adapter = new MyAudioDownloadAdapter(getContext(),bList);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,4 +73,25 @@ public class MyAudioDownnloads extends Fragment {
         });
          return v;
     }
+
+//    public ArrayList<String> getAudioFilesFromDirs(String Dir){
+//        ArrayList<String> PIDS = new ArrayList<String>();
+//
+//        Log.d("Files", "Path: " + Dir);
+//        File f = new File(Dir);
+//        File file[] = f.listFiles();
+//        if(file != null){
+//            Log.d("Files", "Size: "+ file.length);
+//            for (int i=0; i < file.length; i++)
+//            {    String s=file[i].getName();
+//
+//                Log.d("Files", "FileName:" + s);
+//                String upToNCharacters = s.substring(0, Math.min(s.length(), 3));
+//                PIDS.add(upToNCharacters);
+//            }
+//            Log.d("PIDS from Activity",String.valueOf(PIDS));
+//
+//        }
+//        return PIDS;
+//    }
 }

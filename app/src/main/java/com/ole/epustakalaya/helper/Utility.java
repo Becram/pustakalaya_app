@@ -45,7 +45,7 @@ public class Utility {
         Log.v("LEts Crash","Crash Now "+book.publisher);
     }
 
-    public static void getAudioFilesFromDirs(String Dir){
+    public static ArrayList<String> getAudioFilesFromDirs(String Dir){
         ArrayList<String> PIDS = new ArrayList<String>();
 
         Log.d("Files", "Path: " + Dir);
@@ -63,7 +63,7 @@ public class Utility {
             Log.d("PIDS",String.valueOf(PIDS));
 
         }
-
+       return PIDS;
     }
 
     public static void giveNoConnectionMessage(final Context context){

@@ -11,6 +11,7 @@ import com.ole.epustakalaya.models.AudioBook;
 import com.ole.epustakalaya.models.AudioBookDB;
 import com.ole.epustakalaya.models.Book;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -183,8 +184,30 @@ public class MyAudioBooksDB extends SQLiteOpenHelper {
         return count;
     }
 
+    public ArrayList<AudioBookDB> getAudioFilesFromDirsComparewithSqlite(ArrayList<String> bookArray){
+
+        ArrayList<AudioBookDB> my_aDownloads = new ArrayList<AudioBookDB>();
+        SQLiteDatabase database = getReadableDatabase();
+
+
+
+        for (int i=0;i<bookArray.size();i++){
+
+
+            Log.d(" query the DB",bookArray.get(i));
+
+
+            my_aDownloads.add(getBook(bookArray.get(i)));
+
+        }
+//        Log.d("dirs DB",my_aDownloads.get(1).getTitle());
+        return my_aDownloads;
+
+
+    }
+
     /* Method for fetching record from Database */
-    public ArrayList<AudioBookDB> getAllDownloadABooks() {
+    public ArrayList<AudioBookDB> getAllDodfwnloadABooks() {
         String query = "SELECT * FROM " + TABLE_NAME;
         ArrayList<AudioBookDB> my_aDownloads = new ArrayList<AudioBookDB>();
         SQLiteDatabase database = getReadableDatabase();
