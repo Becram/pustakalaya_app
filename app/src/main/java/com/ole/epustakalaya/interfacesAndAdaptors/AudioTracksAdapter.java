@@ -22,23 +22,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadSampleListener;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.ole.epustakalaya.AudioTracksPlayFragment;
 import com.ole.epustakalaya.MainActivity;
 import com.ole.epustakalaya.R;
 import com.ole.epustakalaya.helper.MyAudioBooksDB;
-import com.ole.epustakalaya.helper.MyBooksDB;
-import com.ole.epustakalaya.helper.ServerSideHelper;
-import com.ole.epustakalaya.helper.Utility;
-import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioAllViewHolder;
-import com.ole.epustakalaya.interfacesAndAdaptors.MyAudioTracksViewHolder;
-import com.ole.epustakalaya.interfacesAndAdaptors.OnLoadMoreListener;
+
 
 import com.ole.epustakalaya.models.AudioBook;
 import com.ole.epustakalaya.models.AudioBookDB;
 import com.ole.epustakalaya.models.Book;
 import com.ole.epustakalaya.models.Track;
 
+
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -159,32 +160,34 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public void onClick(View v) {
 
-
+//                    Uri destinationUri = Uri.parse("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
 
                     File direct = new File(Environment.getExternalStorageDirectory()
                                 + "/Epustakalaya/audio");
 
+
                         if (!direct.exists()) {
                             direct.mkdirs();
                         }
+                      createDownloadTask(BASE_URL + mTrack.getTrackURL()).start();
 
 
 
-
-                    dm = (DownloadManager) myContext.getSystemService(myContext.DOWNLOAD_SERVICE);
-                    DownloadManager.Request request = new DownloadManager.Request(
-                            Uri.parse(BASE_URL + mTrack.getTrackURL()));
-                    request.setAllowedNetworkTypes(
-                                DownloadManager.Request.NETWORK_WIFI
-                                        | DownloadManager.Request.NETWORK_MOBILE)
-                                .setAllowedOverRoaming(true).setTitle(mTrack.getTitle())
-                                .setDescription("Downloading ...")
-                                .setTitle(mTrack.getTitle())
-                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                    .setDestinationInExternalPublicDir("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
-//                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
-                    myContext.registerReceiver(receiver,intentFilter);
-                    enqueue = dm.enqueue(request);
+//
+//                    dm = (DownloadManager) myContext.getSystemService(myContext.DOWNLOAD_SERVICE);
+//                    DownloadManager.Request request = new DownloadManager.Request(
+//                            Uri.parse(BASE_URL + mTrack.getTrackURL()));
+//                    request.setAllowedNetworkTypes(
+//                                DownloadManager.Request.NETWORK_WIFI
+//                                        | DownloadManager.Request.NETWORK_MOBILE)
+//                                .setAllowedOverRoaming(true).setTitle(mTrack.getTitle())
+//                                .setDescription("Downloading ...")
+//                                .setTitle(mTrack.getTitle())
+//                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+//                    .setDestinationInExternalPublicDir("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
+////                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
+//                    myContext.registerReceiver(receiver,intentFilter);
+//                    enqueue = dm.enqueue(request);
 
 //                    File file = new File(Environment.getExternalStorageDirectory()
 //                            + "/Epustakalaya/audio"+ AudioTracksPlayFragment.book_image);
@@ -416,4 +419,46 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
 
 
-}
+    private BaseDownloadTask createDownloadTask(String url) {
+
+        final String path;
+        path = FileDownloadUtils.getDefaultSaveRootPath() + File.separator + "tmp1";
+        return FileDownloader.getImpl().create(url)
+                .setPath(path)
+                .setCallbackProgressTimes(300)
+                .setTag("cool")
+                .setListener(new FileDownloadSampleListener() {
+                    @Override
+                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        super.progress(task, soFarBytes, totalBytes);
+
+                    }
+
+                    @Override
+                    protected void error(BaseDownloadTask task, Throwable e) {
+                        super.error(task, e);
+
+                    }
+
+                    @Override
+                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        super.paused(task, soFarBytes, totalBytes);
+
+                    }
+
+                    @Override
+                    protected void completed(BaseDownloadTask task) {
+                        super.completed(task);
+
+                    }
+
+                    @Override
+                    protected void warn(BaseDownloadTask task) {
+                        super.warn(task);
+
+                    }
+                });
+
+
+    }
+    }

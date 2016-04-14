@@ -61,9 +61,12 @@ public class MyAudioDownloadAdapter extends BaseAdapter {
 //        TextView addressTextView = (TextView) convertView.findViewById(R.id.tv_emp_address);
 
         AudioBookDB e = new AudioBookDB();
+        if(e.getTitle() != null) {
 
             e = bookList.get(position);
             Tilte.setText(e.getTitle());
+
+        }
 
 //        nameTextView.setText("Name: " + e.getName());
 //        emailTextView.setText("Email: " + e.getEmail());
