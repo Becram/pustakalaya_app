@@ -16,7 +16,7 @@ public class MyAudioTracksViewHolder extends RecyclerView.ViewHolder {
 
 private final TextView mFileSize;
 private final TextView mDuration;
-private final ImageView mDownload;
+
 private  TextView mAudioTitle;
 
 private  ImageView mPicture;
@@ -26,9 +26,9 @@ public MyAudioTracksViewHolder(View itemView) {
         super(itemView);
 //        mPicture = (ImageView) itemView.findViewById(R.id.icon_recycle);
         mAudioTitle = (TextView) itemView.findViewById(R.id.track_title);
-        mFileSize = (TextView) itemView.findViewById(R.id.size);
-        mDuration = (TextView) itemView.findViewById(R.id.duration);
-        mDownload = (ImageView) itemView.findViewById(R.id.downloader);
+        mFileSize = (TextView) itemView.findViewById(R.id.track_size);
+        mDuration = (TextView) itemView.findViewById(R.id.track_duration);
+
 //        itemView.setOnClickListener(this);
 
 //        mDownload.setOnClickListener(new View.OnClickListener() {
@@ -56,9 +56,7 @@ public TextView getFileSize() {
 public TextView getDuration() {
         return mDuration;
         }
-public ImageView getDownloader() {
-        return mDownload;
-        }
+
 
 
 

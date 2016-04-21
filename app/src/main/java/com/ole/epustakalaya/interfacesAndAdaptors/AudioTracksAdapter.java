@@ -123,6 +123,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
             vholder = new MyAudioTracksViewHolder(v);
         } else {
+
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.progressbar_item, parent, false);
 
@@ -136,12 +137,13 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder HOLDER, final int position) {
-//        face= Typeface.createFromAsset(myContext.getAssets(), "fonts/Kelson Sans Light.otf");
+        face= Typeface.createFromAsset(myContext.getAssets(), "fonts/Kelson Sans Regular.otf");
 
 
         final Track mTrack=mTrackList.get(position);
         if (HOLDER instanceof MyAudioTracksViewHolder) {
             ((MyAudioTracksViewHolder) HOLDER).getTextViewAudioTitle().setText(mTrack.track_title);
+            ((MyAudioTracksViewHolder) HOLDER).getTextViewAudioTitle().setTypeface(face);
             Log.d("title_test", mTrack.getTitle());
 
             ((MyAudioTracksViewHolder) HOLDER).getFileSize().setText(humanReadableByteCount(mTrack.track_size, true));
@@ -154,102 +156,118 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 //                    + "/Epustakalaya/audio");
             Log.d("regex", StringRegx(AudioTracksPlayFragment.book_title));
 
-            ((MyAudioTracksViewHolder) HOLDER).getDownloader().setOnClickListener(new View.OnClickListener() {
-                
-                @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-                @Override
-                public void onClick(View v) {
-
-//                    Uri destinationUri = Uri.parse("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
-
-                    File direct = new File(Environment.getExternalStorageDirectory()
-                                + "/Epustakalaya/audio");
-
-
-                        if (!direct.exists()) {
-                            direct.mkdirs();
-                        }
-                      createDownloadTask(BASE_URL + mTrack.getTrackURL()).start();
-
-
-
+//            ((MyAudioTracksViewHolder) HOLDER).getDownloader().setOnClickListener(new View.OnClickListener() {
 //
-//                    dm = (DownloadManager) myContext.getSystemService(myContext.DOWNLOAD_SERVICE);
-//                    DownloadManager.Request request = new DownloadManager.Request(
-//                            Uri.parse(BASE_URL + mTrack.getTrackURL()));
-//                    request.setAllowedNetworkTypes(
+//                @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+//                @Override
+//                public void onClick(View v) {
+//
+////                    Uri destinationUri = Uri.parse("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
+//
+//                    File direct = new File(Environment.getExternalStorageDirectory()
+//                                + "/Epustakalaya/audio");
+//
+//
+//                        if (!direct.exists()) {
+//                            direct.mkdirs();
+//                        }
+//                     log(BASE_URL + mTrack.getTrackURL());
+////                      createDownloadTask("http://7xjww9.com1.z0.glb.clouddn.com/20130221114001385.jpg").start();
+//
+//
+//
+//
+//                    File audiofile = new File(Environment.getExternalStorageDirectory()
+//                            + "/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTitle()+ mTrack.getTrackURL());
+//                    if(!audiofile.exists()){
+//
+//                        dm = (DownloadManager) myContext.getSystemService(myContext.DOWNLOAD_SERVICE);
+//                        DownloadManager.Request request = new DownloadManager.Request(
+//                                Uri.parse(BASE_URL + mTrack.getTrackURL().replaceAll("\\s", "%20")));
+//                        request.setAllowedNetworkTypes(
 //                                DownloadManager.Request.NETWORK_WIFI
 //                                        | DownloadManager.Request.NETWORK_MOBILE)
 //                                .setAllowedOverRoaming(true).setTitle(mTrack.getTitle())
 //                                .setDescription("Downloading ...")
 //                                .setTitle(mTrack.getTitle())
-//                            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-//                    .setDestinationInExternalPublicDir("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
+//                                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+//                                .setDestinationInExternalPublicDir("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
 ////                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
-//                    myContext.registerReceiver(receiver,intentFilter);
-//                    enqueue = dm.enqueue(request);
-
+//                        myContext.registerReceiver(receiver,intentFilter);
+//                        enqueue = dm.enqueue(request);
+//
+//
+//                    }else{
+//                        log("already downloaded");
+//                    }
+//
+//
+//
+//
+//
 //                    File file = new File(Environment.getExternalStorageDirectory()
 //                            + "/Epustakalaya/audio"+ AudioTracksPlayFragment.book_image);
 //                    if(!file.exists()) {
-//                        Log.d("downloading cover","1st time");
+//                        Log.d("downloading cover",AudioTracksPlayFragment.book_image);
 //                        DownloadManager.Request requestCover = new DownloadManager.Request(
 //                                Uri.parse(BASE_URL + AudioTracksPlayFragment.book_image));
 //
 //                        requestCover.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
 //                                .setDestinationInExternalPublicDir("/Epustakalaya/audio/", AudioTracksPlayFragment.book_image);
 ////                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
-//                        myContext.registerReceiver(receiver, intentFilter);
+////                        myContext.registerReceiver(CoverDownloadreceiver, intentFilter);
 //                        enqueue = dm.enqueue(requestCover);
 //
 //                    }
-
-
-
-//                    if (Build.VERSION.SDK_INT >= 23) {
-//
-//                        Log.d("permission", "seems like permission needs to be granted");
-////                        ActivityCompat.requestPermissions(audioTracksActivity.getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-//
-//                    } else {
-//
-//                        Toast.makeText(v.getContext(), "downloader at " + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL(), Toast.LENGTH_LONG).show();
-//                        DownloadManager downloadmanager = (DownloadManager) myContext.getSystemService(Context.DOWNLOAD_SERVICE);
-//                        Uri uri = Uri
-//                                .parse(BASE_URL + mTrack.getTrackURL());
-//
-//                        File direct = new File(Environment.getExternalStorageDirectory()
-//                                + "/Epustakalaya/audio");
-//
-//                        if (!direct.exists()) {
-//                            direct.mkdirs();
-//                        }
-//
-//                        DownloadManager.Request request = new DownloadManager.Request(uri);
-//                        request.setAllowedNetworkTypes(
-//                                DownloadManager.Request.NETWORK_WIFI
-//                                        | DownloadManager.Request.NETWORK_MOBILE)
-//                                .setAllowedOverRoaming(false).setTitle(mTrack.getTitle())
-//                                .setDescription("Downloading ...")
-//                                .setDestinationInExternalPublicDir("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
-////                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
 //
 //
-//                        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-//                            // only for honeycomb
-//                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-//                        }
-////                    File mydownload = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+ "/AudioBooks");
-////                    request.setDestinationInExternalPublicDir(mydownload.getAbsolutePath(),mTrack.getTitle());
-//
-//                        dbAudioBookWrite(AudioTracksPlayFragment.book_id,AudioTracksPlayFragment.book_title,AudioTracksPlayFragment.book_author,AudioTracksPlayFragment.book_image,mTrack.getTrackURL());
-//                    getBooks(AudioTracksPlayFragment.book_id);
-//                        downloadmanager.enqueue(request);
 //
 //
-//                    }
-               }
-            });
+//
+////                    if (Build.VERSION.SDK_INT >= 23) {
+////
+////                        Log.d("permission", "seems like permission needs to be granted");
+//////                        ActivityCompat.requestPermissions(audioTracksActivity.getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+////
+////                    } else {
+////
+////                        Toast.makeText(v.getContext(), "downloader at " + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL(), Toast.LENGTH_LONG).show();
+////                        DownloadManager downloadmanager = (DownloadManager) myContext.getSystemService(Context.DOWNLOAD_SERVICE);
+////                        Uri uri = Uri
+////                                .parse(BASE_URL + mTrack.getTrackURL());
+////
+////                        File direct = new File(Environment.getExternalStorageDirectory()
+////                                + "/Epustakalaya/audio");
+////
+////                        if (!direct.exists()) {
+////                            direct.mkdirs();
+////                        }
+////
+////                        DownloadManager.Request request = new DownloadManager.Request(uri);
+////                        request.setAllowedNetworkTypes(
+////                                DownloadManager.Request.NETWORK_WIFI
+////                                        | DownloadManager.Request.NETWORK_MOBILE)
+////                                .setAllowedOverRoaming(false).setTitle(mTrack.getTitle())
+////                                .setDescription("Downloading ...")
+////                                .setDestinationInExternalPublicDir("/Epustakalaya/audio/", AudioTracksPlayFragment.book_id + "_" + StringRegx(AudioTracksPlayFragment.book_title) + mTrack.getTrackURL());
+//////                            .setDestinationInExternalPublicDir("/Epustakalaya/audio/",StringRegx(AudioTracksPlayFragment.book_title)+ mTrack.getTrackURL());
+////
+////
+////                        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+////                            // only for honeycomb
+////                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+////                        }
+//////                    File mydownload = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+ "/AudioBooks");
+//////                    request.setDestinationInExternalPublicDir(mydownload.getAbsolutePath(),mTrack.getTitle());
+////
+////                        dbAudioBookWrite(AudioTracksPlayFragment.book_id,AudioTracksPlayFragment.book_title,AudioTracksPlayFragment.book_author,AudioTracksPlayFragment.book_image,mTrack.getTrackURL());
+////                    getBooks(AudioTracksPlayFragment.book_id);
+////                        downloadmanager.enqueue(request);
+////
+////
+////                    }
+//               }
+//            });
 
 
 //            Log.d("book chap", mTrack.track_title);
@@ -262,6 +280,11 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
 
+    }
+
+    private void log(String s) {
+
+        Log.d("downloading",s);
     }
 
     public  String StringRegx(String s) {
@@ -286,12 +309,15 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
         String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
         return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
+
+
+
     public void dbAudioBookWrite(String pid,String filename,String author,String cover,String URL){
+
         MyAudioBooksDB db = new MyAudioBooksDB(myContext);
         Log.d("DB", "witing db");
 //        book.isDownloading = isDownloading;
         db.addAudioBook(pid, filename, author, cover, URL);
-
 
     }
 
@@ -317,7 +343,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
                         Log.d("complete",c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME)));
                         context.unregisterReceiver(receiver);
-                        dbAudioBookWrite(AudioTracksPlayFragment.book_id, AudioTracksPlayFragment.book_title, AudioTracksPlayFragment.book_author, AudioTracksPlayFragment.book_image, c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME)));
+//                        dbAudioBookWrite(AudioTracksPlayFragment.book_id, AudioTracksPlayFragment.book_title, AudioTracksPlayFragment.book_author, AudioTracksPlayFragment.book_image, c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME)));
 
 
 //                        ImageView view = (ImageView) findViewById(R.id.imageView1);
@@ -332,6 +358,43 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
         }
     };
+
+//    BroadcastReceiver CoverDownloadreceiver = new BroadcastReceiver() {
+//
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//
+//            String action = intent.getAction();
+//            if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+//                long downloadId = intent.getLongExtra(
+//                        DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+//                DownloadManager.Query query = new DownloadManager.Query();
+//                query.setFilterById(enqueue);
+//                Cursor c = dm.query(query);
+//                if (c.moveToFirst()) {
+//                    int columnIndex = c
+//                            .getColumnIndex(DownloadManager.COLUMN_STATUS);
+//                    if (DownloadManager.STATUS_SUCCESSFUL == c
+//                            .getInt(columnIndex)) {
+//
+//                        Log.d("complete cover",c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME)));
+//                        context.unregisterReceiver(CoverDownloadreceiver);
+////                        dbAudioBookWrite(AudioTracksPlayFragment.book_id, AudioTracksPlayFragment.book_title, AudioTracksPlayFragment.book_author, AudioTracksPlayFragment.book_image, c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME)));
+//
+//
+////                        ImageView view = (ImageView) findViewById(R.id.imageView1);
+////                        String uriString = c
+////                                .getString(c
+////                                        .getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+////                        view.setImageURI(Uri.parse(uriString));
+//                    }
+//                }
+//            }
+//
+//
+//        }
+//    };
 
 
     public void getAllAUdio(){
@@ -419,46 +482,6 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
 
 
 
-    private BaseDownloadTask createDownloadTask(String url) {
-
-        final String path;
-        path = FileDownloadUtils.getDefaultSaveRootPath() + File.separator + "tmp1";
-        return FileDownloader.getImpl().create(url)
-                .setPath(path)
-                .setCallbackProgressTimes(300)
-                .setTag("cool")
-                .setListener(new FileDownloadSampleListener() {
-                    @Override
-                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        super.progress(task, soFarBytes, totalBytes);
-
-                    }
-
-                    @Override
-                    protected void error(BaseDownloadTask task, Throwable e) {
-                        super.error(task, e);
-
-                    }
-
-                    @Override
-                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        super.paused(task, soFarBytes, totalBytes);
-
-                    }
-
-                    @Override
-                    protected void completed(BaseDownloadTask task) {
-                        super.completed(task);
-
-                    }
-
-                    @Override
-                    protected void warn(BaseDownloadTask task) {
-                        super.warn(task);
-
-                    }
-                });
 
 
-    }
     }

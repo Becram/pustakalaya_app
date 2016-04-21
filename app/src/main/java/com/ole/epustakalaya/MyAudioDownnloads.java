@@ -45,6 +45,7 @@ public class MyAudioDownnloads extends Fragment {
 //        }
         ArrayList myArray=Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
                 + "/Epustakalaya/audio");
+
 //        Log.d("myloop", databaseHelper.getAudioFilesFromDirsComparewithSqlite(Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
 //                + "/Epustakalaya/audio")).get(0).getTitle());
 
@@ -52,8 +53,8 @@ public class MyAudioDownnloads extends Fragment {
 //                    + "/Epustakalaya/au
         bList.clear();
 
-//        bList = databaseHelper.getAudioFilesFromDirsComparewithSqlite(Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
-//                + "/Epustakalaya/audio"));
+        bList = databaseHelper.getAudioFilesFromDirsComparewithSqlite(Utility.getAudioFilesFromDirs(Environment.getExternalStorageDirectory()
+                + "/Epustakalaya/audio"));
         MyAudioDownloadAdapter adapter = new MyAudioDownloadAdapter(getContext(),bList);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

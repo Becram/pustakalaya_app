@@ -256,7 +256,7 @@
                     android:padding="5dp"
                     android:gravity="center"
                     android:background="#F7F7F7"
-                    android:textColor="#5E5E5E"/>
+                    android:textColor="@color/color_primary_dark"/>
                 <TextView
                     android:id="@+id/tvSummary"
                     android:layout_width="match_parent"

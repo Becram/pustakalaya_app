@@ -55,17 +55,17 @@ public class AudioDetailsFragment extends Fragment implements Callback<ModelAudi
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.saudio_detail_fragment, container, false);
-        cover= (ImageView) v.findViewById(R.id.image_cover);
-        text_author= (TextView) v.findViewById(R.id.textView_author);
-        text_language= (TextView) v.findViewById(R.id.textView_lanuage);
-        text_title= (TextView) v.findViewById(R.id.textView_title);
-        text_views= (TextView) v.findViewById(R.id.textView_views);
-        text_publisher= (TextView) v.findViewById(R.id.textView_publisher);
-        text_reader= (TextView) v.findViewById(R.id.textView_reader);
-        text_genre= (TextView) v.findViewById(R.id.textView_genre);
-        text_chap_count= (TextView) v.findViewById(R.id.textView_Chap_count);
-        text_description= (TextView) v.findViewById(R.id.textView_description);
-        progress_detail= (ProgressBar) v.findViewById(R.id.progress_details);
+        cover= (ImageView) v.findViewById(R.id.tr_cover);
+        text_author= (TextView) v.findViewById(R.id.tr_author);
+        text_language= (TextView) v.findViewById(R.id.tr_language);
+        text_title= (TextView) v.findViewById(R.id.tr_title);
+        text_views= (TextView) v.findViewById(R.id.tr_views);
+        text_publisher= (TextView) v.findViewById(R.id.tr_publisher);
+        text_reader= (TextView) v.findViewById(R.id.tr_reader);
+        text_genre= (TextView) v.findViewById(R.id.tr_genre);
+        text_chap_count= (TextView) v.findViewById(R.id.tr_chaptercount);
+        text_description= (TextView) v.findViewById(R.id.tr_summery);
+        progress_detail= (ProgressBar) v.findViewById(R.id.tr_progress);
 
 
 

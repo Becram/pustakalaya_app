@@ -43,6 +43,7 @@ public class AudioAllAMainDetails extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTheme(R.style.myTheme);
         setContentView(R.layout.audio_details);
 
 
@@ -74,8 +75,8 @@ public class AudioAllAMainDetails extends ActionBarActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.about_us_background);
-        tabLayout.getTabAt(1).setIcon(R.drawable.custom_icon);
+//        tabLayout.getTabAt(0).setIcon(R.drawable.about_us_background);
+//        tabLayout.getTabAt(1).setIcon(R.drawable.custom_icon);
 
 
     }
