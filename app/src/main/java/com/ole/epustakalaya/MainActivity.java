@@ -891,7 +891,7 @@ public class MainActivity extends ActionBarActivity  implements ExpandableListVi
             TextView childCount = (TextView) row.findViewById(R.id.childcount);
             CheckedTextView textViewGroupName = (CheckedTextView) row.findViewById(R.id.textViewGroupName);
 
-            childCount.setText(""+getChildrenCount(groupPosition));
+            childCount.setText(" "+getChildrenCount(groupPosition));
             textViewGroupName.setText(parentItems.get(groupPosition));
             textViewGroupName.setChecked(isExpanded);
 

@@ -230,7 +230,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                mPlayerControl.setImageResource(R.drawable.button_reload);
+                mPlayerControl.setImageResource(R.drawable.repeat);
             }
         });
         int startPosition = 0;
@@ -322,6 +322,8 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         audioRecyclerView.clearFocus();
 
         audioRecyclerView.setAdapter(mAdapter);
+        final ArrayList<String> myTracks=getAllTracks(response);
+
 
         ItemClickSupport.addTo(audioRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
@@ -349,7 +351,9 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
 
                 try {
 
-                    String audio_url = BASE_URL + createList(response).get(position).getTrackURL();
+                    Log.d("audio list",myTracks.toString());
+                    String audio_url = getTrack(myTracks,position);
+//                    String audio_url = BASE_URL + createList(response).get(position).getTrackURL();
                     String fixedUrl = audio_url.replaceAll("\\s", "%20");
 //
 
@@ -367,6 +371,9 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
 
 
 
+
+
+
         mAdapter.notifyDataSetChanged();
 
 
@@ -381,7 +388,24 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
 
 
     }
+    public ArrayList<String> getAllTracks(Response<ModelAudioBookDetails> response){
 
+        ArrayList<String> audioList=new ArrayList<String>();
+        audioList.clear();
+        for (int i = 0; i <  response.body().getContent().getChapters().size(); i++){
+
+            audioList.add(BASE_URL + createList(response).get(i).getTrackURL());
+        }
+
+
+        return audioList;
+    }
+    public String getTrack(ArrayList<String> trackList,int position){
+
+        String trackURL=trackList.get(position);
+
+        return trackURL;
+    }
 
     private List<Track> createList(Response<ModelAudioBookDetails> t) {
 
