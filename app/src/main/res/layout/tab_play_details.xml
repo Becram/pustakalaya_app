@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         android:layout_above="@+id/view"
-        />
+        android:layout_below="@+id/textView_play_title"/>
 
     <android.support.v7.widget.Toolbar
         android:background="#333333"
@@ -33,6 +33,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+
        >
 
     </android.support.v7.widget.Toolbar>
@@ -54,9 +55,12 @@
         android:layout_height="300px"
         android:src="@drawable/olenepal_logo"
         android:paddingBottom="20px"
-        android:layout_alignTop="@+id/selected_playpause_status"
-        android:layout_alignLeft="@+id/textView_play_title"
-        android:layout_alignStart="@+id/textView_play_title"/>
+        android:layout_alignBottom="@+id/linearLayout"
+        android:layout_toRightOf="@+id/textView_play_title"
+        android:layout_toEndOf="@+id/textView_play_title"
+        android:layout_marginLeft="34dp"
+        android:layout_marginStart="34dp"
+        />
     <TextView
         android:id="@+id/selected_track_title"
         android:paddingLeft="8dp"
@@ -65,9 +69,9 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="title"
+        android:singleLine="true"
 
-
-        android:layout_below="@+id/selected_playpause_status"
+        android:layout_above="@+id/selected_chapter"
         android:layout_alignLeft="@+id/selected_playpause_status"
         android:layout_alignStart="@+id/selected_playpause_status"/>
     <TextView
@@ -78,18 +82,16 @@
         android:textSize="10sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/selected_track_title"
+        android:layout_alignTop="@+id/player_control"
         android:layout_alignLeft="@+id/selected_track_title"
         android:layout_alignStart="@+id/selected_track_title"/>
 
     <TextView
         android:id="@+id/selected_playpause_status"
-        android:paddingLeft="4dp"
+        android:paddingLeft="8dp"
         android:text="Playing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-
         android:layout_marginLeft="30dp"
         android:layout_marginStart="30dp"
         android:layout_below="@+id/seekBar"
@@ -102,42 +104,60 @@
       android:orientation="horizontal"
       android:layout_alignLeft="@+id/selected_chapter"
       android:layout_alignStart="@+id/selected_chapter"
-      android:layout_alignParentBottom="true">
+      android:layout_alignParentBottom="true"
+      android:id="@+id/linearLayout">
 
 
-    <ImageView
-        android:layout_width="54dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/pre"
-        android:padding="10dp"
-        android:src="@drawable/left_arrow"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/selected_chapter"
-        android:layout_alignEnd="@+id/selected_chapter"/>
-
-      <ImageView
-          android:id="@+id/player_control"
-          android:padding="10dp"
-
-          android:layout_width="80dp"
-          android:layout_height="70dp"
-          android:layout_alignParentBottom="true"
-          android:layout_toRightOf="@+id/selected_chapter"
-          android:layout_toEndOf="@+id/selected_chapter"
-          />
-
-    <ImageView
-        android:layout_width="54dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
-        android:padding="10dp"
-        android:src="@drawable/right_arrow"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
   </LinearLayout>
 
+    <ImageView
+        android:id="@+id/player_control"
+        android:padding="10dp"
 
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="start"
+        android:id="@+id/my_start"
+        android:paddingTop="10px"
+        android:paddingLeft="10px"
+        android:textColor="#fff"
+        android:layout_below="@+id/seekBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10px"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="end"
+        android:id="@+id/my_end"
+        android:textColor="#fff"
+
+        android:paddingRight="10px"
+        android:layout_alignBottom="@+id/selected_playpause_status"
+        android:layout_alignRight="@+id/player_control"
+        android:layout_alignEnd="@+id/player_control"/>
+
+    <TextView
+        android:id="@+id/title_play"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+
+        android:textSize="28dp"
+        android:textColor="#0D8282"
+        android:text="Title"/>
 
 
 </RelativeLayout>

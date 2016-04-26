@@ -32,6 +32,7 @@ import com.ole.epustakalaya.R;
 import com.ole.epustakalaya.helper.MyAudioBooksDB;
 
 
+import com.ole.epustakalaya.helper.Utility;
 import com.ole.epustakalaya.models.AudioBook;
 import com.ole.epustakalaya.models.AudioBookDB;
 import com.ole.epustakalaya.models.Book;
@@ -147,7 +148,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
             Log.d("title_test", mTrack.getTitle());
 
             ((MyAudioTracksViewHolder) HOLDER).getFileSize().setText(humanReadableByteCount(mTrack.track_size, true));
-            ((MyAudioTracksViewHolder) HOLDER).getDuration().setText(getConvertedTime(mTrack.track_duration));
+            ((MyAudioTracksViewHolder) HOLDER).getDuration().setText(Utility.getConvertedTime(mTrack.track_duration));
 
 
 
@@ -419,25 +420,7 @@ public class AudioTracksAdapter<T> extends RecyclerView.Adapter<RecyclerView.Vie
         Log.d("get Book",db.getBook(pid).getCover());
     }
 
-    public static String getConvertedTime(double value) {
-        String output;
 
-        long min = (long) (value / 60);
-        long second = (long) (value % 60);
-        if (min < 60){
-
-            output = min + ":" + (second > 10 ? "" : "0") + second;
-
-        }else{
-
-            long hr=min/60;
-            output=hr+":"+(min-hr*60) + ":" + (second > 10 ? "" : "0") + second;
-
-        }
-        return output;
-
-
-    }
 
 
 

@@ -71,6 +71,52 @@ public class Utility {
 
     }
 
+
+    public static String getConvertedTime(double value) {
+        String output;
+
+        long min = (long) (value / 60);
+        long second = (long) (value % 60);
+        if (min < 60){
+
+            output = min + ":" + (second > 10 ? "" : "0") + second;
+
+        }else{
+
+            long hr=min/60;
+            output=hr+":"+(min-hr*60) + ":" + (second > 10 ? "" : "0") + second;
+
+        }
+        return output;
+
+
+    }
+    public static String getConvertedTimeFromMS(double value) {
+        String output;
+
+
+        double sec= value/1000;
+
+        long min = (long) (sec / 60);
+        long second = (long) (sec % 60);
+
+            if (min < 60) {
+
+                output = min + ":" + (second > 10 ? "" : "0") + second;
+
+            } else {
+
+                long hr = min / 60;
+                output = hr + ":" + (min - hr * 60) + ":" + (second > 10 ? "" : "0") + second;
+
+            }
+
+            return output;
+
+
+
+    }
+
     public static boolean createPdfDir(){
         boolean ret = true;
 

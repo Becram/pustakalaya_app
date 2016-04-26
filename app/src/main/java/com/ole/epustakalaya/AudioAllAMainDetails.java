@@ -89,24 +89,6 @@ public class AudioAllAMainDetails extends ActionBarActivity {
         viewPager.setAdapter(adapter);
     }
 
-//    @Override
-//    public void onResponse(Response<ModelAudioBookDetails> response, Retrofit retrofit) {
-//
-//
-//       Log.d("image_ on response ",BASE_URL+response.body().getContent().getImage());
-//
-////        Picasso.with(getApplication()).load(BASE_URL+response.body().getContent().getImage())
-////               .into(cover);
-//
-// //    text_title.setText(response.body().getContent().getAuthor());
-//
-//
-//    }
-//
-//    @Override
-//    public void onFailure(Throwable t) {
-//
-//    }
 
     class TabViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

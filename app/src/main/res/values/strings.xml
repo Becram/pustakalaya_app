@@ -74,8 +74,8 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="paused">paused</string>
-    <string name="playing">playing</string>
+    <string name="paused">Paused</string>
+    <string name="playing">Playing</string>
     <string name="permission_storage">permissionStorage</string>
 
 
@@ -89,11 +89,9 @@
     <string name="Chaptercount">Chaptercount</string>
     <string name="summary">Summary</string>
     <string name="thumbnail">icon for author</string>
-    <string name="summery_values">
-        buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhibuddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi buddhi
 
 
-    </string>
+
     <string name="title">title name</string>
     <string name="auther_value">ganeshgeeeeeeeeeeeeeee</string>
     <string name="language_values">englishhhhhhhhhhhh</string>

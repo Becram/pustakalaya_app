@@ -1,12 +1,16 @@
 package com.ole.epustakalaya;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -19,11 +23,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.ole.epustakalaya.helper.Utility;
 import com.ole.epustakalaya.interfacesAndAdaptors.AudioTracksAdapter;
 import com.ole.epustakalaya.interfacesAndAdaptors.ItemClickSupport;
 import com.ole.epustakalaya.models.ModelAudioBookDetails;
@@ -35,6 +41,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -78,6 +85,15 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     public static String book_title;
     public static String book_author;
     public static String book_image;
+    public SharedPreferences pref;
+    public  SharedPreferences.Editor editor;
+    public ImageView mPlayerNext;
+    public  TextView mStartTime;
+    public  TextView mEndtime;
+    private CountDownTimer mCountDownTimer;
+    public int i;
+    private TextView mTitle;
+
 //    private Context context;
 
 
@@ -149,20 +165,22 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         mSelectedTrackTitle = (TextView) v.findViewById(R.id.selected_track_title);
         mSelectedTrackChapter = (TextView) v.findViewById(R.id.selected_chapter);
         mSelectedTrackStatus = (TextView) v.findViewById(R.id.selected_playpause_status);
-//        mSelectedTrackTitle = (TextView) v.findViewById(R.id.selected_track_title);
+
         mSelectedTrackImage = (ImageView) v.findViewById(R.id.selected_track_image);
         mPlayerControl = (ImageView) v.findViewById(R.id.player_control);
-        mSeekBar= (SeekBar) v.findViewById(R.id.seekBar);
 
+        mSeekBar= (SeekBar) v.findViewById(R.id.seekBar);
         audioRecyclerView = (RecyclerView) v.findViewById(R.id.track_recycler_view);
         audioRecyclerView.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         audioRecyclerView.setLayoutManager(mLayoutManager);
-//        mSeekBar.setMax(mMediaPlayer.getDuration());
         mSeekBar.setOnSeekBarChangeListener(this);
         toolbar_view=v.findViewById(R.id.view);
-
+//        mStart= (TextView) v.findViewById(R.id.my_start);
+        mStartTime= (TextView)  v.findViewById(R.id.my_start);
+        mEndtime=   (TextView)  v.findViewById(R.id.my_end);
+        mTitle=   (TextView)  v.findViewById(R.id.title_play);
 
 
 
@@ -203,8 +221,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         book_id=AudioAllAMainDetails.get_bookid;
         book_author=AudioAllAMainDetails.get_author;
         book_image=AudioAllAMainDetails.get_image;
-//        book_id=AudioAllAMainDetails.get_bookid;
-//        book_id=AudioAllAMainDetails.get_bookid;
+
 
 
         call.enqueue(this);
@@ -238,7 +255,10 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         Log.d("track", String.valueOf(total));
 
 
-//        downloadManger = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+
+
+
+
 
 
 
@@ -251,6 +271,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         }
 
 
+
     };
 
     public void SeekUpdation() {
@@ -261,7 +282,19 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
             if (mMediaPlayer != null)
                 mSeekBar.setMax(mMediaPlayer.getDuration());
 
-            mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
+                mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
+
+                 mStartTime.setText(Utility.getConvertedTimeFromMS(mMediaPlayer.getCurrentPosition()));
+                 Log.d("raw1",Utility.getConvertedTimeFromMS(mMediaPlayer.getCurrentPosition()));
+                 Log.d("raw2",String.valueOf(mMediaPlayer.getCurrentPosition()));
+
+//                int status=(mMediaPlayer.getCurrentPosition()/mMediaPlayer.getDuration())*100;
+//
+//                mStartTime.setText(String.valueOf(mSeekBar.getProgress()));
+
+//                int status=(mMediaPlayer.getCurrentPosition() / mMediaPlayer.getDuration()) * 100;
+//
+//                mStartTime.setText(String.valueOf(status));‌​
 
 
 
@@ -277,6 +310,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         }
 
     }
+
 
     private void togglePlayPause() {
         if (mMediaPlayer.isPlaying()) {
@@ -316,14 +350,11 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     public void onResponse(final Response<ModelAudioBookDetails> response, Retrofit retrofit) {
         mListItems=createList(response);
         Log.d("list",mListItems.get(0).getTitle());
-
+        mTitle.setText(response.body().getContent().getTitle());
         mAdapter = new AudioTracksAdapter(createList(response),audioRecyclerView ,getActivity());
-
         audioRecyclerView.clearFocus();
-
         audioRecyclerView.setAdapter(mAdapter);
         final ArrayList<String> myTracks=getAllTracks(response);
-
 
         ItemClickSupport.addTo(audioRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
@@ -335,7 +366,10 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
 
 
 
+
                 mSelectedTrackChapter.setText(track.getTitle());
+                mStartTime.setText(Utility.getConvertedTime(track.getTrackDuration()));
+                mEndtime.setText(Utility.getConvertedTime(track.getTrackDuration()));
 
                 Picasso.with(getContext()).load(BASE_URL + response.body().getContent().getImage()).into(mSelectedTrackImage);
 
@@ -344,6 +378,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
                     mMediaPlayer.stop();
                     mMediaPlayer.reset();
                 }else {
+
                     Log.d("paused","from inside");
                     mMediaPlayer.stop();
                     mMediaPlayer.reset();
@@ -351,12 +386,11 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
 
                 try {
 
+
                     Log.d("audio list",myTracks.toString());
                     String audio_url = getTrack(myTracks,position);
 //                    String audio_url = BASE_URL + createList(response).get(position).getTrackURL();
                     String fixedUrl = audio_url.replaceAll("\\s", "%20");
-//
-
                     mMediaPlayer.setDataSource(fixedUrl);
                     Log.d("track url", fixedUrl);
                     mMediaPlayer.prepareAsync();
@@ -380,6 +414,13 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
 
 
     }
+
+    public void playMusic(int position){
+
+
+
+    }
+
 
     @Override
     public void onFailure(Throwable t) {
