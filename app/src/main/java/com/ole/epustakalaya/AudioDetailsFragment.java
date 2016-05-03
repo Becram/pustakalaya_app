@@ -68,7 +68,6 @@ public class AudioDetailsFragment extends Fragment implements Callback<ModelAudi
         progress_detail= (ProgressBar) v.findViewById(R.id.tr_progress);
 
 
-
 //        text_author.setText("radhav");
         progress_detail.setVisibility(View.VISIBLE);
 

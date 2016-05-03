@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -46,6 +48,39 @@
         </activity>
         <activity android:name=".AudioAllAMainDetails"></activity>
         <activity android:name=".AudioDownloadedPlay"></activity>
+
+    <receiver
+        android:name="com.google.android.gms.gcm.GcmReceiver"
+        android:exported="true"
+        android:permission="com.google.android.c2dm.permission.SEND" >
+        <intent-filter>
+            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            <category android:name="gcm.play.android.samples.com.gcmquickstart" />
+        </intent-filter>
+    </receiver>
+
+    <!-- [START gcm_listener] -->
+    <service
+        android:name="com.ole.epustakalaya.gcm.MyGcmListenerService"
+        android:exported="false" >
+        <intent-filter>
+            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        </intent-filter>
+    </service>
+    <!-- [END gcm_listener] -->
+    <!-- [START instanceId_listener] -->
+    <service
+        android:name="com.ole.epustakalaya.gcm.MyInstanceIDListenerService"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="com.google.android.gms.iid.InstanceID"/>
+        </intent-filter>
+    </service>
+    <!-- [END instanceId_listener] -->
+    <service
+        android:name="com.ole.epustakalaya.gcm.RegistrationIntentService"
+        android:exported="false">
+    </service>
     </application>
 
 </manifest>
