@@ -71,6 +71,12 @@ public class RegistrationIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean sent = sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+        if(sent){
+            Log.d("GCM","Already Registered");
+
+            return;
+        }
 
         try {
             // [START register_for_gcm]
@@ -91,7 +97,7 @@ public class RegistrationIntentService extends IntentService {
 //              toasting(token);
 
             // TODO: Implement this method to send any registration to your app's servers.
-            sendRegistrationToServer(token);
+//            sendRegistrationToServer(token);
 
             // Subscribe to topic channels
             subscribeTopics(token);
@@ -123,29 +129,29 @@ public class RegistrationIntentService extends IntentService {
      */
     public void sendRegistrationToServer(String token) {
 
-        try {
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("name", "12"));
-            nameValuePairs.add(new BasicNameValuePair("email", "12"));
-            nameValuePairs.add(new BasicNameValuePair("email", "12"));
-
-
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(
-                        "http://www.pustakalaya.org/gcm/register_regid.php ");
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpClient.execute(httpPost);
-
-                HttpEntity entity = response.getEntity();
-
-
-
-            } catch (ClientProtocolException e) {
-
-            } catch (IOException e) {
-                Log.d("http", e.toString());
-            }
+//        try {
+//            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+//            nameValuePairs.add(new BasicNameValuePair("name", "12"));
+//            nameValuePairs.add(new BasicNameValuePair("email", "12"));
+//            nameValuePairs.add(new BasicNameValuePair("email", "12"));
+//
+//
+//                HttpClient httpClient = new DefaultHttpClient();
+//                HttpPost httpPost = new HttpPost(
+//                        "http://www.pustakalaya.org/gcm/register_regid.php ");
+//                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//
+//                HttpResponse response = httpClient.execute(httpPost);
+//
+//                HttpEntity entity = response.getEntity();
+//
+//
+//
+//            } catch (ClientProtocolException e) {
+//
+//            } catch (IOException e) {
+//                Log.d("http", e.toString());
+//            }
 
 
 

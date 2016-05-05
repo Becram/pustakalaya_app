@@ -2,8 +2,11 @@ package com.ole.epustakalaya;
 
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,8 +16,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -31,12 +36,17 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.ExceptionReporter;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.ole.epustakalaya.gcm.QuickstartPreferences;
+import com.ole.epustakalaya.gcm.RegistrationIntentService;
 import com.ole.epustakalaya.helper.MyBooksDB;
 import com.ole.epustakalaya.helper.Preference;
 import com.ole.epustakalaya.helper.ServerSideHelper;
@@ -60,6 +70,7 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity  implements ExpandableListView.OnChildClickListener, BookFetchListener {
 
     private static String TAG = "MyActivity";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     private ServerSideHelper serverSideHelper;
 
@@ -95,6 +106,8 @@ public class MainActivity extends ActionBarActivity  implements ExpandableListVi
     private String last_searched_string = null;
 
     private static WeakReference<MainActivity> wrActivity = null;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private boolean isReceiverRegistered;
 
 
     @Override
@@ -230,6 +243,57 @@ public class MainActivity extends ActionBarActivity  implements ExpandableListVi
                 fragDo(homepageFragment,R.id.container,"MainPage");
             }
 
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+               
+                
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                    Log.d("GCM","registered to GCM");
+//                    mInformationTextView.setText(getString(R.string.gcm_send_message));
+                } else {
+                    Log.d("GCM","Something wrong happened");;
+                }
+            }
+        };
+
+        registerReceiver();
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+        
+        
+
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+    private void registerReceiver(){
+        if(!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                    new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
+            isReceiverRegistered = true;
+        }
     }
 
     @Override
@@ -275,6 +339,7 @@ public class MainActivity extends ActionBarActivity  implements ExpandableListVi
     @Override
     public void onResume(){
         Log.v(TAG, "Resumed from background");
+        registerReceiver();
         super.onResume();
         isInBackground = false;
         //they says we need to handle background to foreground
@@ -624,6 +689,8 @@ public class MainActivity extends ActionBarActivity  implements ExpandableListVi
     }
     @Override
     protected void onPause(){
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        isReceiverRegistered = false;
         super.onPause();
       if(progressDialog!=null){
           progressDialog.dismiss();

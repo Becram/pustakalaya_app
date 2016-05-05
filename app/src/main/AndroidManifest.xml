@@ -62,6 +62,8 @@
     <!-- [START gcm_listener] -->
     <service
         android:name="com.ole.epustakalaya.gcm.MyGcmListenerService"
+        android:enabled="true"
+
         android:exported="false" >
         <intent-filter>
             <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -71,6 +73,7 @@
     <!-- [START instanceId_listener] -->
     <service
         android:name="com.ole.epustakalaya.gcm.MyInstanceIDListenerService"
+        android:enabled="true"
         android:exported="false">
         <intent-filter>
             <action android:name="com.google.android.gms.iid.InstanceID"/>
@@ -79,6 +82,7 @@
     <!-- [END instanceId_listener] -->
     <service
         android:name="com.ole.epustakalaya.gcm.RegistrationIntentService"
+        android:enabled="true"
         android:exported="false">
     </service>
     </application>

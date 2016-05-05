@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -52,7 +53,7 @@ import retrofit.Retrofit;
 /**
  * Created by bikram on 3/10/16.
  */
-public class AudioTracksPlayFragment extends Fragment implements Callback<ModelAudioBookDetails>, SeekBar.OnSeekBarChangeListener {
+public class AudioTracksPlayFragment extends Fragment implements Callback<ModelAudioBookDetails>, SeekBar.OnSeekBarChangeListener,MediaPlayer.OnBufferingUpdateListener {
 
     private List<Track> mListItems;
     private AudioTracksAdapter mAdapter;
@@ -75,6 +76,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     private SeekBar mSeekBar;
      DownloadManager downloadManger;
     Handler seekHandler = new Handler();
+    private final Handler handler = new Handler();
     private View toolbar_view;
     private static int a=0;
     private BroadcastReceiver downloadCompleteBroadcastReceiver;
@@ -93,6 +95,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     private CountDownTimer mCountDownTimer;
     public int i;
     private TextView mTitle;
+    private int mediaFileLengthInMilliseconds;
 
 //    private Context context;
 
@@ -122,25 +125,6 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         return ret;
     }
 
-//    public void AudioDownloader(String book_title,String downloadFileUrl){
-//
-//        Uri localFileUrl = Uri.fromFile(new File(AudioDirectory + book_title));
-//        DownloadManager.Request request = new DownloadManager.Request(downloadFileUrl);
-//        request.setDescription("Downloading ...")
-//                .setTitle(book.title);
-//        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-//            // only for honeycomb
-//            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-//        }
-//
-//        //The server need to send the content-length on http response
-//        //http://stackoverflow.com/questions/26401069/android-download-manager-always-displays-indefinite-progress-bar-and-not-progres
-//        request.setDestinationUri(localFileUrl);
-//        request.setVisibleInDownloadsUi(true);
-//
-//    }
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -152,8 +136,6 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
-
-
     }
 
     @Override
@@ -161,30 +143,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.tab_play_details, container, false);
-
-        mSelectedTrackTitle = (TextView) v.findViewById(R.id.selected_track_title);
-        mSelectedTrackChapter = (TextView) v.findViewById(R.id.selected_chapter);
-        mSelectedTrackStatus = (TextView) v.findViewById(R.id.selected_playpause_status);
-
-        mSelectedTrackImage = (ImageView) v.findViewById(R.id.selected_track_image);
-        mPlayerControl = (ImageView) v.findViewById(R.id.player_control);
-
-        mSeekBar= (SeekBar) v.findViewById(R.id.seekBar);
-        audioRecyclerView = (RecyclerView) v.findViewById(R.id.track_recycler_view);
-        audioRecyclerView.setHasFixedSize(false);
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        audioRecyclerView.setLayoutManager(mLayoutManager);
-        mSeekBar.setOnSeekBarChangeListener(this);
-        toolbar_view=v.findViewById(R.id.view);
-//        mStart= (TextView) v.findViewById(R.id.my_start);
-        mStartTime= (TextView)  v.findViewById(R.id.my_start);
-        mEndtime=   (TextView)  v.findViewById(R.id.my_end);
-        mTitle=   (TextView)  v.findViewById(R.id.title_play);
-
-
-
-
+        initViews(v);
         return  v;
     }
 
@@ -201,6 +160,28 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         }
     }
 
+    public void initViews(View v){
+
+        mSelectedTrackTitle = (TextView) v.findViewById(R.id.selected_track_title);
+        mSelectedTrackChapter = (TextView) v.findViewById(R.id.selected_chapter);
+        mSelectedTrackStatus = (TextView) v.findViewById(R.id.selected_playpause_status);
+        mSelectedTrackImage = (ImageView) v.findViewById(R.id.selected_track_image);
+        mPlayerControl = (ImageView) v.findViewById(R.id.player_control);
+        mSeekBar= (SeekBar) v.findViewById(R.id.seekBar);
+        audioRecyclerView = (RecyclerView) v.findViewById(R.id.track_recycler_view);
+        audioRecyclerView.setHasFixedSize(false);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        audioRecyclerView.setLayoutManager(mLayoutManager);
+        mSeekBar.setOnSeekBarChangeListener(this);
+        mSeekBar.setMax(99);
+        toolbar_view=v.findViewById(R.id.view);
+        mStartTime= (TextView)  v.findViewById(R.id.my_start);
+        mEndtime=   (TextView)  v.findViewById(R.id.my_end);
+        mTitle=   (TextView)  v.findViewById(R.id.title_play);
+
+
+    }
 
 
     @Override
@@ -228,6 +209,8 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
 
 
         mMediaPlayer = new MediaPlayer();
+        mMediaPlayer.setOnBufferingUpdateListener(this);
+
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -252,27 +235,34 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         });
         int startPosition = 0;
         int total = mMediaPlayer.getDuration();
+        mediaFileLengthInMilliseconds =total;
         Log.d("track", String.valueOf(total));
-
-
-
-
-
-
-
-
 
     }
 
     Runnable run = new Runnable() {
         @Override
         public void run() {
+//            primarySeekBarProgressUpdater();
             SeekUpdation();
+
         }
 
 
 
     };
+
+    private void primarySeekBarProgressUpdater() {
+        mSeekBar.setProgress((int) (((float) mMediaPlayer.getCurrentPosition() / mediaFileLengthInMilliseconds) * 100)); // This math construction give a percentage of "was playing"/"song length"
+        if (mMediaPlayer.isPlaying()) {
+            Runnable notification = new Runnable() {
+                public void run() {
+                    primarySeekBarProgressUpdater();
+                }
+            };
+            handler.postDelayed(notification, 1000);
+        }
+    }
 
     public void SeekUpdation() {
 //        mMediaPlayer.getCurrentPosition()=a;
@@ -288,13 +278,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
                  Log.d("raw1",Utility.getConvertedTimeFromMS(mMediaPlayer.getCurrentPosition()));
                  Log.d("raw2",String.valueOf(mMediaPlayer.getCurrentPosition()));
 
-//                int status=(mMediaPlayer.getCurrentPosition()/mMediaPlayer.getDuration())*100;
-//
-//                mStartTime.setText(String.valueOf(mSeekBar.getProgress()));
 
-//                int status=(mMediaPlayer.getCurrentPosition() / mMediaPlayer.getDuration()) * 100;
-//
-//                mStartTime.setText(String.valueOf(status));‌​
 
 
 
@@ -344,6 +328,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
             mSelectedTrackStatus.setText(R.string.playing);
             toolbar_view.setVisibility(View.VISIBLE);
         }
+//        primarySeekBarProgressUpdater();
     }
 
     @Override
@@ -514,4 +499,10 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     };
 
 
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+        mSeekBar.setSecondaryProgress(percent);
+        Log.d("buffering",String.valueOf(percent));
+
+    }
 }
