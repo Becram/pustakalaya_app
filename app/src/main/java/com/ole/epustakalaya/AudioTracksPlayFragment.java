@@ -1,14 +1,13 @@
 package com.ole.epustakalaya;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
+
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.media.AudioManager;
-import android.media.AudioTrack;
+
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -22,6 +21,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -53,7 +53,7 @@ import retrofit.Retrofit;
 /**
  * Created by bikram on 3/10/16.
  */
-public class AudioTracksPlayFragment extends Fragment implements Callback<ModelAudioBookDetails>, SeekBar.OnSeekBarChangeListener,MediaPlayer.OnBufferingUpdateListener {
+public class AudioTracksPlayFragment extends Fragment implements Callback<ModelAudioBookDetails>,View.OnClickListener, MediaPlayer.OnBufferingUpdateListener, View.OnTouchListener, MediaPlayer.OnCompletionListener {
 
     private List<Track> mListItems;
     private AudioTracksAdapter mAdapter;
@@ -128,7 +128,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     @Override
     public void onDestroy() {
         super.onDestroy();
-        seekHandler.removeCallbacks(run);
+//        seekHandler.removeCallbacks(run);
         if (mMediaPlayer != null) {
             if (mMediaPlayer.isPlaying()) {
                 mMediaPlayer.stop();
@@ -150,7 +150,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        seekHandler.removeCallbacks(run);
+//        seekHandler.removeCallbacks(run);
         if (mMediaPlayer != null) {
             if (mMediaPlayer.isPlaying()) {
                 mMediaPlayer.stop();
@@ -173,12 +173,14 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         audioRecyclerView.setLayoutManager(mLayoutManager);
-        mSeekBar.setOnSeekBarChangeListener(this);
+//        mSeekBar.setOnSeekBarChangeListener(this);
         mSeekBar.setMax(99);
         toolbar_view=v.findViewById(R.id.view);
         mStartTime= (TextView)  v.findViewById(R.id.my_start);
         mEndtime=   (TextView)  v.findViewById(R.id.my_end);
         mTitle=   (TextView)  v.findViewById(R.id.title_play);
+
+
 
 
     }
@@ -187,10 +189,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mListItems = new ArrayList<Track>();
-//
-//        mAdapter = new AudioTracksAdapter(getContext(), mListItems);
-//        listView.setAdapter(mAdapter);
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://www.pustakalaya.org")
@@ -212,45 +211,33 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         mMediaPlayer.setOnBufferingUpdateListener(this);
 
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                togglePlayPause();
-            }
-        });
-        mPlayerControl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                togglePlayPause();
-
-            }
-        });
+//        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//                togglePlayPause();
+//            }
+//        });
 
 
-        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mPlayerControl.setImageResource(R.drawable.repeat);
-            }
-        });
-        int startPosition = 0;
+
+
         int total = mMediaPlayer.getDuration();
         mediaFileLengthInMilliseconds =total;
         Log.d("track", String.valueOf(total));
 
     }
 
-    Runnable run = new Runnable() {
-        @Override
-        public void run() {
-//            primarySeekBarProgressUpdater();
-            SeekUpdation();
-
-        }
-
-
-
-    };
+//    Runnable run = new Runnable() {
+//        @Override
+//        public void run() {
+////            primarySeekBarProgressUpdater();
+//            SeekUpdation();
+//
+//        }
+//
+//
+//
+//    };
 
     private void primarySeekBarProgressUpdater() {
         mSeekBar.setProgress((int) (((float) mMediaPlayer.getCurrentPosition() / mediaFileLengthInMilliseconds) * 100)); // This math construction give a percentage of "was playing"/"song length"
@@ -264,72 +251,56 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         }
     }
 
-    public void SeekUpdation() {
-//        mMediaPlayer.getCurrentPosition()=a;
-
-        seekHandler.removeCallbacks(run);
-        try {
-            if (mMediaPlayer != null)
-                mSeekBar.setMax(mMediaPlayer.getDuration());
-
-                mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
-
-                 mStartTime.setText(Utility.getConvertedTimeFromMS(mMediaPlayer.getCurrentPosition()));
-                 Log.d("raw1",Utility.getConvertedTimeFromMS(mMediaPlayer.getCurrentPosition()));
-                 Log.d("raw2",String.valueOf(mMediaPlayer.getCurrentPosition()));
-
-
-
-
-
-
-            Log.d("max", String.valueOf(mMediaPlayer.getDuration()));
-
-
-            seekHandler.postDelayed(run, 1000);
-
-        }catch (InstantiationException e){
-
-            Log.d("max", e.toString());
-        }
-
-    }
+//    public void SeekUpdation() {
+////        mMediaPlayer.getCurrentPosition()=a;
+//
+//        seekHandler.removeCallbacks(run);
+//        try {
+//            if (mMediaPlayer != null)
+//                mSeekBar.setMax(mMediaPlayer.getDuration());
+//
+//                mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
+//
+//                 mStartTime.setText(Utility.getConvertedTimeFromMS(mMediaPlayer.getCurrentPosition()));
+//                 Log.d("raw1",Utility.getConvertedTimeFromMS(mMediaPlayer.getCurrentPosition()));
+//                 Log.d("raw2",String.valueOf(mMediaPlayer.getCurrentPosition()));
+//
+//            Log.d("max", String.valueOf(mMediaPlayer.getDuration()));
+//
+//
+//            seekHandler.postDelayed(run, 1000);
+//
+//        }catch (InstantiationException e){
+//
+//            Log.d("max", e.toString());
+//        }
+//
+//    }
 
 
-    private void togglePlayPause() {
-        if (mMediaPlayer.isPlaying()) {
-            mMediaPlayer.pause();
-            boolean pause=true;
-            mPlayerControl.setImageResource(R.drawable.play_new);
-            toolbar_view.setVisibility(View.VISIBLE);
-
-
-//            mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
-            mSelectedTrackStatus.setText(R.string.paused);
-        }
-
-        else if(pause_status){
-
-            mMediaPlayer.start();
-            mPlayerControl.setImageResource(R.drawable.play_new);
-            toolbar_view.setVisibility(View.VISIBLE);
-
-
-//            mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
-            mSelectedTrackStatus.setText(R.string.paused);
-
-
-            }
-         else {
-            mMediaPlayer.start();
-            SeekUpdation();
-//            mSeekBar.setMax(mMediaPlayer.getDuration());
-            mPlayerControl.setImageResource(R.drawable.pause_new);
-            mSelectedTrackStatus.setText(R.string.playing);
-            toolbar_view.setVisibility(View.VISIBLE);
-        }
-//        primarySeekBarProgressUpdater();
-    }
+//    private void togglePlayPause() {
+//
+//            /** ImageButton onClick event handler. Method which start/pause mediaplayer playing */
+//            try {
+//               // setup song from http://www.hrupin.com/wp-content/uploads/mp3/testsong_20_sec.mp3 URL to mediaplayer data source
+//                mMediaPlayer.prepare(); // you must call this method after setup the datasource in setDataSource method. After calling prepare() the instance of MediaPlayer starts load data from URL to internal buffer.
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            mediaFileLengthInMilliseconds = mMediaPlayer.getDuration(); // gets the song length in milliseconds from URL
+//
+//            if (!mMediaPlayer.isPlaying()) {
+//                mMediaPlayer.start();
+//                mPlayerControl.setImageResource(R.drawable.button_pause);
+//            } else {
+//                mMediaPlayer.pause();
+//                mPlayerControl.setImageResource(R.drawable.button_play);
+//            }
+//
+//            primarySeekBarProgressUpdater();
+//
+//    }
 
     @Override
     public void onResponse(final Response<ModelAudioBookDetails> response, Retrofit retrofit) {
@@ -359,15 +330,17 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
                 Picasso.with(getContext()).load(BASE_URL + response.body().getContent().getImage()).into(mSelectedTrackImage);
 
                 Log.d("item", String.valueOf(position));
-                if (mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.stop();
-                    mMediaPlayer.reset();
-                }else {
 
-                    Log.d("paused","from inside");
-                    mMediaPlayer.stop();
-                    mMediaPlayer.reset();
-                }
+                playpauseToggle();
+//                if (mMediaPlayer.isPlaying()) {
+//                    mMediaPlayer.stop();
+//                    mMediaPlayer.reset();
+//                }else {
+//
+//                    Log.d("paused","from inside");
+//                    mMediaPlayer.stop();
+//                    mMediaPlayer.reset();
+//                }
 
                 try {
 
@@ -400,11 +373,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
 
     }
 
-    public void playMusic(int position){
 
-
-
-    }
 
 
     @Override
@@ -455,28 +424,11 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
     }
 
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if(fromUser) {
-            mMediaPlayer.seekTo(progress);
-//            mSeekBar.setMax(mMediaPlayer.getDuration());
-            mSeekBar.setProgress(progress);
-        }
-        Log.d("Seek progeress ", String.valueOf(progress));
 
 
-    }
 
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        mSeekBar.setProgress(mMediaPlayer.getCurrentPosition());
 
-    }
 
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
-    }
     PhoneStateListener PhoneStatus=new PhoneStateListener(){
 
         @Override
@@ -504,5 +456,58 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
         mSeekBar.setSecondaryProgress(percent);
         Log.d("buffering",String.valueOf(percent));
 
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (v.getId() == R.id.seekBar) {
+            /** Seekbar onTouch event handler. Method which seeks MediaPlayer to seekBar primary progress position*/
+            if (mMediaPlayer.isPlaying()) {
+                SeekBar sb = (SeekBar) v;
+                int playPositionInMillisecconds = (mediaFileLengthInMilliseconds / 100) * sb.getProgress();
+                mMediaPlayer.seekTo(playPositionInMillisecconds);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        mPlayerControl.setImageResource(R.drawable.button_play);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v.getId() == R.id.player_control) {
+            playpauseToggle();
+
+        }
+    }
+    public void playpauseToggle(){
+
+        /** ImageButton onClick event handler. Method which start/pause mediaplayer playing */
+        try {
+            // setup song from http://www.hrupin.com/wp-content/uploads/mp3/testsong_20_sec.mp3 URL to mediaplayer data source
+            mMediaPlayer.prepare(); // you must call this method after setup the datasource in setDataSource method. After calling prepare() the instance of MediaPlayer starts load data from URL to internal buffer.
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mediaFileLengthInMilliseconds = mMediaPlayer.getDuration(); // gets the song length in milliseconds from URL
+
+        if (!mMediaPlayer.isPlaying()) {
+            mMediaPlayer.start();
+            mPlayerControl.setImageResource(R.drawable.button_pause);
+        } else {
+            mMediaPlayer.pause();
+            mPlayerControl.setImageResource(R.drawable.button_play);
+        }
+        mMediaPlayer.setOnBufferingUpdateListener(this);
+        mMediaPlayer.setOnCompletionListener(this);
+        mSeekBar.setOnTouchListener(this);
+
+        primarySeekBarProgressUpdater();
     }
 }
