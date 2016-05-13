@@ -108,7 +108,7 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
 
 
 //        RecyclerAdaper adapter = (RecyclerAdaper) mRecyclerView.getAdapter();
-        Log.d("snkbdj", ToStringBuilder.reflectionToString(response));
+        Log.d("Audio Books", ToStringBuilder.reflectionToString(response));
          mAdapter.notifyDataSetChanged();
 
         ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
