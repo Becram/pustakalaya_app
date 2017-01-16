@@ -6,7 +6,7 @@
     android:layout_height="100dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="3dp"
-    android:layout_marginBottom="16dp">
+    android:layout_marginBottom="30dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +21,6 @@
             android:scaleType="centerCrop"
             />
 
-
         <TextView
             android:id="@+id/ivBookTitle"
             android:layout_width="match_parent"
@@ -29,10 +28,10 @@
             android:padding="2dp"
             android:textSize="13sp"
             android:scrollHorizontally="true"
-            android:text="Book Title"
+
             android:textColor="@color/accent_color"
             android:gravity="center"
-
+            android:layout_below="@+id/ivCoverImage"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:maxLines="1"

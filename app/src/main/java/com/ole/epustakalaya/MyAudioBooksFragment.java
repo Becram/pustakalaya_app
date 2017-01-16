@@ -93,12 +93,6 @@ public class MyAudioBooksFragment extends Fragment implements Callback<AllAudioB
     @Override
     public void onResponse(final Response<AllAudioBooks> response, Retrofit retrofit) {
 
-//        progress.setVisibility(View.GONE);
-
-//        Log.d("size of book list", String.valueOf(response.body().getContent().size()));
-//        Log.d("size of book list", String.valueOf(response.body().getContent().get(109).getTitle()));
-
-
 
 
         createList(response);
