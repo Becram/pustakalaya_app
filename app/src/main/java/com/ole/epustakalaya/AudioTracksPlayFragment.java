@@ -252,7 +252,7 @@ public class AudioTracksPlayFragment extends Fragment implements Callback<ModelA
                 mStartTime.setText(""+Utility.milliSecondsToTimer(currentDuration));
 
                 // Updating progress bar
-                int progress = (int)(Utility.getProgressPercentage(currentDuration, totalDuration));
+                int progress = Utility.getProgressPercentage(currentDuration, totalDuration);
                 //Log.d("Progress", ""+progress);
                 mSeekBar.setProgress(progress);
 

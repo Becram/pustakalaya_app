@@ -10,7 +10,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 23
         versionCode 8
-        versionName "1.0.7"
+        versionName "1.0.8"
         multiDexEnabled true
     }
     buildTypes {
@@ -40,6 +40,8 @@ dependencies {
 
     compile 'com.liulishuo.filedownloader:library:0.2.3'
     compile 'com.android.support:multidex:1.0.0'
+
+
 
 }
 apply plugin: 'com.google.gms.google-services'

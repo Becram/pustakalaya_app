@@ -390,7 +390,7 @@ public class BookDetailsActivity extends ActionBarActivity{
             tvViewCount.setText(book.views + "");
 
             if(book.pageCount!=0){
-                ((LinearLayout)findViewById(R.id.llPageCountId)).setVisibility(View.VISIBLE);
+                findViewById(R.id.llPageCountId).setVisibility(View.VISIBLE);
                 tvPageCount.setText(book.pageCount + "");
             }
 

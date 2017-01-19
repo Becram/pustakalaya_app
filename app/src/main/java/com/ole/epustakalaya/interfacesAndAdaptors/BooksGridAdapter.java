@@ -70,10 +70,10 @@ public class BooksGridAdapter extends BaseAdapter {
         if (convertView==null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView=inflater.inflate(R.layout.book_grid_cell, parent,false);
+            convertView=inflater.inflate(R.layout.card_view_bookgrid, parent,false);
             viewHolder = new ViewHolder();
-            viewHolder.mainImg = (ImageView) convertView.findViewById(R.id.ivCoverImage);
-            viewHolder.mainTitle = (TextView) convertView.findViewById(R.id.ivBookTitle);
+            viewHolder.mainImg = (ImageView) convertView.findViewById(R.id.audio_cover);
+            viewHolder.mainTitle = (TextView) convertView.findViewById(R.id.audio_author);
             convertView.setTag(viewHolder);
         }
         else {
@@ -93,15 +93,16 @@ public class BooksGridAdapter extends BaseAdapter {
 //                viewHolder.mainImg.setImageBitmap(myBitmap);
                 Log.v("ImageSize","ImageLoaded form local storage");
             } else {
-                Log.d("book from gride view","not local");
+                Log.d("book from grid view","not local");
                 loadImageFromUrl(books[position].coverImageURL, viewHolder.mainImg);
-//                viewHolder.mainTitle.setText(books[position].title);
+                viewHolder.mainTitle.setText(books[position].title);
+                Log.d("get tittle",books[position].title);
 
             }
         } else {
             loadImageFromUrl(books[position].coverImageURL,viewHolder.mainImg);
+
             viewHolder.mainTitle.setText(books[position].title);
-//            Log.d("title",books[position].title);
        }
         return convertView;
     }

@@ -33,7 +33,7 @@
             android:padding="2dp"
             android:textSize="13sp"
             android:scrollHorizontally="true"
-
+            android:text="bikram"
             android:textColor="@color/accent_color"
             android:gravity="center"
             android:layout_below="@+id/audio_cover"

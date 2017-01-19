@@ -402,6 +402,7 @@ public class ServerSideHelper {
                 JSONObject jo = (JSONObject) jsonArray.get(i);
                 Book book = new Book();
                 book.coverImageURL = jo.getString("bookCover");
+                book.title=jo.getString("title");
                 book.pid = jo.getString("pid");
                 books[i] = book;
             }

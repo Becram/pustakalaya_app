@@ -7,9 +7,9 @@ import com.ole.epustakalaya.models.Book;
  */
 
 public interface BookFetchListener {
-    public static int BookTypeEditorsPicks = 101;
-    public static int BookTypeLatestBooksFirstLoad = 102;
-    public static int BookTypeLatestBooksLoadMore = 103;
+    int BookTypeEditorsPicks = 101;
+    int BookTypeLatestBooksFirstLoad = 102;
+    int BookTypeLatestBooksLoadMore = 103;
 
     void onFetchedBookReceived(Book[] books,int BooksType);
 }

@@ -24,4 +24,5 @@ public class Book {
     public boolean isDownloading;
     public String fileSize;
 
+
 }

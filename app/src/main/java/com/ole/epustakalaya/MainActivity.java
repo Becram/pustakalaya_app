@@ -256,7 +256,7 @@ public class MainActivity extends ActionBarActivity  implements ExpandableListVi
                     Log.d("GCM","registered to GCM");
 //                    mInformationTextView.setText(getString(R.string.gcm_send_message));
                 } else {
-                    Log.d("GCM","Something wrong happened");;
+                    Log.d("GCM","Something wrong happened");
                 }
             }
         };
@@ -614,7 +614,7 @@ public class MainActivity extends ActionBarActivity  implements ExpandableListVi
             // database doesn't exist yet.
         }
 
-        return checkDB != null ? true : false;
+        return checkDB != null;
     }
 
 //    populate subsection database when called server for sections extraction
@@ -656,7 +656,7 @@ public class MainActivity extends ActionBarActivity  implements ExpandableListVi
         String APP_DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
         /*Log.w("FROM COPY DATABASE - ",APP_DB_PATH);*/
         SQLiteDatabase emptydatabase = null;
-        emptydatabase = this.openOrCreateDatabase(APP_DB_PATH+OUTPUT_DB_FILE,context.MODE_PRIVATE,null);
+        emptydatabase = this.openOrCreateDatabase(APP_DB_PATH+OUTPUT_DB_FILE, MODE_PRIVATE,null);
         //Open your local db as the input stream
         InputStream myInput = context.getAssets().open(ASSETDB);
 

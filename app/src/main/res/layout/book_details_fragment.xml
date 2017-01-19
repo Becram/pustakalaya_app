@@ -226,12 +226,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <Button
                             android:id="@+id/btnDownloadOpen"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Download"
-                            />
+                            android:textColor="#000"
+                            android:background="@drawable/border_radius"
+
+
+
+                              />
                         <Button
                             android:id="@+id/btnDelete"
                             android:layout_width="match_parent"

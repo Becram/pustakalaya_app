@@ -171,7 +171,7 @@ public class Utility {
      * */
     public static int progressToTimer(int progress, int totalDuration) {
         int currentDuration = 0;
-        totalDuration = (int) (totalDuration / 1000);
+        totalDuration = totalDuration / 1000;
         currentDuration = (int) ((((double)progress) / 100) * totalDuration);
 
         // return current duration in milliseconds
@@ -234,11 +234,7 @@ public class Utility {
     public static Boolean isConnected(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
-        } else {
-            return false;
-        }
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     public static Boolean isServerAlive(Context context){
@@ -344,11 +340,7 @@ public class Utility {
 
         Log.v("Utility","Exp: "+expected+" exact = "+value);
 
-        if(value >= low && value <= high){
-            return true;
-        }else {
-            return false;
-        }
+        return value >= low && value <= high;
     }
 
     public static Book[] getAllDownloadedBook(Context context){
